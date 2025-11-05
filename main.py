@@ -9,9 +9,9 @@ TEXT_FILE = "./new.txt"  # 쉴드/좌표 목록 txt
 BASE_TIME_STR = "2025-11-05 09:52:30"  # 기준 시각 (KST 기준이라고 가정)
 OUTPUT_HTML = "./baad_shield_output.html"  # 만들어질 HTML 파일 경로
 
-PAGE_TITLE = "BAAD 방어막 만료 순서"
+PAGE_TITLE = "🐑 사냥"
 HEADER_BADGE = "🏰"
-SECTION_TITLE = "BAAD 집결지 현황"
+SECTION_TITLE = "🐑🏠"
 
 
 ########################################
@@ -1271,3 +1271,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
