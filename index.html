@@ -1,41 +1,228 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>현황</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            box-sizing: border-box;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BAAD 방어막 만료 순서</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { box-sizing: border-box; }
+    .tab-active {
+      background-color: rgb(59 130 246);
+      color: white;
+    }
+    .filter-active {
+      background-color: rgb(59 130 246);
+      color: white;
+    }
+    #mapView {
+      position: relative;
+      background: linear-gradient(to bottom right, #f0f9ff, #e0e7ff);
+      border-radius: 0.5rem;
+    }
+    #mapSvg {
+      cursor: grab;
+    }
+    #mapSvg.dragging {
+      cursor: grabbing;
+    }
+    .map-marker {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .map-marker:hover {
+      opacity: 0.8;
+    }
+    .map-marker.selected {
+      filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.8));
+    }
+    .map-info-card {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      min-width: 280px;
+      max-width: 90%;
+      display: none;
+      border: 2px solid rgb(59 130 246);
+    }
+    .map-info-card.show {
+      display: block;
+      animation: slideIn 0.2s ease-out;
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .coord-copy-btn {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .coord-copy-btn:hover {
+      background-color: rgb(59 130 246);
+      color: white;
+    }
+    .coord-copy-btn:active {
+      transform: scale(0.95);
+    }
+    .zoom-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 100;
+    }
+    .zoom-btn {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border: 2px solid rgb(59 130 246);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: rgb(59 130 246);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .zoom-btn:hover:not([style*="cursor: default"]) {
+      background: rgb(59 130 246);
+      color: white;
+    }
+    .zoom-btn:active:not([style*="cursor: default"]) {
+      transform: scale(0.95);
+    }
+    #zoomLevel {
+      min-width: 48px;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .map-info-card {
+        top: 10px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        min-width: auto;
+        width: calc(100% - 20px);
+        max-width: 400px;
+      }
+      .map-info-card.show {
+        animation: slideInMobile 0.2s ease-out;
+      }
+      .zoom-controls {
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+    @keyframes slideInMobile {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-full font-sans">
-    <div class="container mx-auto px-4 py-8">
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">현황</h1>
-            <p class="text-blue-600 font-mono text-lg mt-2" id="currentTime"></p>
-        </header>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans">
+  <div class="container mx-auto px-4 py-8 max-w-7xl">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-800 mb-2">BAAD 방어막 만료 순서</h1>
+      <p class="text-gray-600">기준 시각: <span id="baseTime">2025-11-05 09:52:30</span> (KST)</p>
+      <p class="text-gray-500 text-sm">실시간 카운트다운 업데이트 중</p>
+    </header>
 
-<section class="mb-12">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-        <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm mr-3">🏰</span>
-        BAAD 집결지 현황
-        <span class="ml-2 text-sm text-gray-500">(기준: 2025-11-05 09:52:30)</span>
-      </h2>
+    <!-- Statistics Dashboard -->
+    <div class="grid grid-cols-4 gap-4 mb-6 stats-grid">
+      <div class="bg-white rounded-lg shadow-md p-4 text-center">
+        <div class="text-3xl font-bold text-blue-600">66</div>
+        <div class="text-sm text-gray-600 mt-1">전체</div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-4 text-center">
+        <div class="text-3xl font-bold text-green-600" id="statActive">54</div>
+        <div class="text-sm text-gray-600 mt-1">보호막 활성</div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-4 text-center">
+        <div class="text-3xl font-bold text-gray-400" id="statExpired">12</div>
+        <div class="text-sm text-gray-600 mt-1">만료됨</div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-4 text-center">
+        <div class="text-3xl font-bold text-red-600" id="statCritical">2</div>
+        <div class="text-sm text-gray-600 mt-1">30분 이하</div>
+      </div>
+    </div>
 
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <!-- Filter Controls -->
+    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div class="flex flex-wrap gap-3 items-center">
+        <div class="flex gap-2 flex-wrap">
+          <button onclick="filterRows('all')" class="filter-btn filter-active px-4 py-2 rounded-md bg-gray-200 hover:bg-blue-500 hover:text-white transition" data-filter="all">
+            전체
+          </button>
+          <button onclick="filterRows('active')" class="filter-btn px-4 py-2 rounded-md bg-gray-200 hover:bg-blue-500 hover:text-white transition" data-filter="active">
+            보호막 있음
+          </button>
+          <button onclick="filterRows('expired')" class="filter-btn px-4 py-2 rounded-md bg-gray-200 hover:bg-blue-500 hover:text-white transition" data-filter="expired">
+            보호막 없음
+          </button>
+          <button onclick="filterRows('critical')" class="filter-btn px-4 py-2 rounded-md bg-gray-200 hover:bg-blue-500 hover:text-white transition" data-filter="critical">
+            30분 이하
+          </button>
+        </div>
+        <div class="flex-1 min-w-[200px]">
+          <input type="text" id="searchInput" placeholder="커맨더 이름 검색..."
+                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                 oninput="searchCommanders()">
+        </div>
+      </div>
+    </div>
+
+    <!-- View Toggle Tabs -->
+    <div class="bg-white rounded-t-lg shadow-md">
+      <div class="flex border-b border-gray-200">
+        <button onclick="switchView('list')" class="tab-btn tab-active px-6 py-3 font-semibold focus:outline-none" data-view="list">
+          📋 리스트형
+        </button>
+        <button onclick="switchView('map')" class="tab-btn px-6 py-3 font-semibold focus:outline-none" data-view="map">
+          🗺️ 지도형
+        </button>
+      </div>
+    </div>
+
+    <!-- List View -->
+    <div id="listView" class="bg-white rounded-b-lg shadow-md overflow-hidden">
+      <div class="overflow-x-auto">
         <table class="w-full">
-          <thead class="bg-blue-50 text-left">
+          <thead class="bg-blue-50 text-left sticky top-0">
             <tr>
               <th class="px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">Commander</th>
               <th class="px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">좌표</th>
               <th class="px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">방어막 종료 / 남은시간</th>
             </tr>
           </thead>
-          <tbody>
-<tr class="hover:bg-gray-50" data-datetime="">
+          <tbody id="commanderTableBody">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="anarchist sheep" data-x="914" data-y="137">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Anarchist Sheep</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('914, 137')">(914, 137)</td>
   <td class="px-6 py-4 text-sm">
@@ -48,7 +235,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="nate the citadel" data-x="86" data-y="613">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Nate the citadel</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('86, 613')">(86, 613)</td>
   <td class="px-6 py-4 text-sm">
@@ -61,7 +248,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="소멸하였다 ben" data-x="954" data-y="651">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">소멸하였다 Ben</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('954, 651')">(954, 651)</td>
   <td class="px-6 py-4 text-sm">
@@ -74,7 +261,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="ok13" data-x="933" data-y="691">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">OK13</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('933, 691')">(933, 691)</td>
   <td class="px-6 py-4 text-sm">
@@ -87,7 +274,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="farside 절망" data-x="747" data-y="951">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Farside 절망</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('747, 951')">(747, 951)</td>
   <td class="px-6 py-4 text-sm">
@@ -100,7 +287,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="mukkis" data-x="474" data-y="911">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Mukkis</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('474, 911')">(474, 911)</td>
   <td class="px-6 py-4 text-sm">
@@ -113,7 +300,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="달콤한책방sweet" data-x="855" data-y="39">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">달콤한책방Sweet</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('855, 39')">(855, 39)</td>
   <td class="px-6 py-4 text-sm">
@@ -126,7 +313,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="unwooly guru 구루" data-x="205" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">unwooly guru 구루</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('205, 421')">(205, 421)</td>
   <td class="px-6 py-4 text-sm">
@@ -139,7 +326,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="nebula flux" data-x="955" data-y="933">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Nebula Flux</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('955, 933')">(955, 933)</td>
   <td class="px-6 py-4 text-sm">
@@ -152,7 +339,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="ashley1586" data-x="872" data-y="921">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Ashley1586</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('872, 921')">(872, 921)</td>
   <td class="px-6 py-4 text-sm">
@@ -165,7 +352,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="moosienation" data-x="673" data-y="917">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Moosienation</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('673, 917')">(673, 917)</td>
   <td class="px-6 py-4 text-sm">
@@ -178,7 +365,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="benty22" data-x="930" data-y="865">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Benty22</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('930, 865')">(930, 865)</td>
   <td class="px-6 py-4 text-sm">
@@ -191,7 +378,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T10:10:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T10:10:00" data-status="active" data-minutes="18" data-name="farthobbler" data-x="297" data-y="569">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Farthobbler</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('297, 569')">(297, 569)</td>
   <td class="px-6 py-4 text-sm">
@@ -204,7 +391,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T10:22:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T10:22:00" data-status="active" data-minutes="30" data-name="나이수장" data-x="491" data-y="441">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">나이수장</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('491, 441')">(491, 441)</td>
   <td class="px-6 py-4 text-sm">
@@ -217,7 +404,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T10:52:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T10:52:00" data-status="active" data-minutes="60" data-name="raisehellpraisedale" data-x="311" data-y="605">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">RaiseHellPraiseDale</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('311, 605')">(311, 605)</td>
   <td class="px-6 py-4 text-sm">
@@ -230,7 +417,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T11:01:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T11:01:00" data-status="active" data-minutes="69" data-name="rachelrene 라헬" data-x="224" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">RachelRene 라헬</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('224, 413')">(224, 413)</td>
   <td class="px-6 py-4 text-sm">
@@ -243,7 +430,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T11:02:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T11:02:00" data-status="active" data-minutes="70" data-name="missamericana13" data-x="227" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">MissAmericana13</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('227, 413')">(227, 413)</td>
   <td class="px-6 py-4 text-sm">
@@ -256,7 +443,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T11:51:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T11:51:00" data-status="active" data-minutes="119" data-name="jenna 제나" data-x="293" data-y="577">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Jenna 제나</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('293, 577')">(293, 577)</td>
   <td class="px-6 py-4 text-sm">
@@ -269,7 +456,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T12:19:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T12:19:00" data-status="active" data-minutes="147" data-name="dirkd1ggler" data-x="306" data-y="589">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">DirkD1ggler</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('306, 589')">(306, 589)</td>
   <td class="px-6 py-4 text-sm">
@@ -282,7 +469,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T12:25:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T12:25:00" data-status="active" data-minutes="153" data-name="baa 자이언트" data-x="213" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">BAA 자이언트</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 409')">(213, 409)</td>
   <td class="px-6 py-4 text-sm">
@@ -295,7 +482,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T13:19:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T13:19:00" data-status="active" data-minutes="207" data-name="니뭔대" data-x="215" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">니뭔대</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('215, 413')">(215, 413)</td>
   <td class="px-6 py-4 text-sm">
@@ -308,7 +495,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T13:29:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T13:29:00" data-status="active" data-minutes="217" data-name="seababy" data-x="225" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Seababy</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('225, 401')">(225, 401)</td>
   <td class="px-6 py-4 text-sm">
@@ -321,7 +508,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T13:37:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T13:37:00" data-status="active" data-minutes="225" data-name="general z0d" data-x="297" data-y="565">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">General z0d</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('297, 565')">(297, 565)</td>
   <td class="px-6 py-4 text-sm">
@@ -334,7 +521,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T14:32:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T14:32:00" data-status="active" data-minutes="280" data-name="youm사장" data-x="237" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Youm사장</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 421')">(237, 421)</td>
   <td class="px-6 py-4 text-sm">
@@ -347,7 +534,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T15:14:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T15:14:00" data-status="active" data-minutes="322" data-name="덩그렁" data-x="325" data-y="589">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">덩그렁</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('325, 589')">(325, 589)</td>
   <td class="px-6 py-4 text-sm">
@@ -360,7 +547,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T15:22:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T15:22:00" data-status="active" data-minutes="330" data-name="ezenekai" data-x="224" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Ezenekai</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('224, 409')">(224, 409)</td>
   <td class="px-6 py-4 text-sm">
@@ -373,7 +560,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T15:44:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T15:44:00" data-status="active" data-minutes="352" data-name="brodi32" data-x="986" data-y="553">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Brodi32</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('986, 553')">(986, 553)</td>
   <td class="px-6 py-4 text-sm">
@@ -386,7 +573,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T15:54:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T15:54:00" data-status="active" data-minutes="362" data-name="dr h h holmes 홈즈" data-x="427" data-y="733">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Dr H H Holmes 홈즈</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('427, 733')">(427, 733)</td>
   <td class="px-6 py-4 text-sm">
@@ -399,7 +586,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T16:00:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T16:00:00" data-status="active" data-minutes="368" data-name="mite음메" data-x="221" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Mite음메</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('221, 401')">(221, 401)</td>
   <td class="px-6 py-4 text-sm">
@@ -412,7 +599,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T16:05:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T16:05:00" data-status="active" data-minutes="373" data-name="anna baa" data-x="217" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">ANNA BAA</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('217, 409')">(217, 409)</td>
   <td class="px-6 py-4 text-sm">
@@ -425,7 +612,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T16:56:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T16:56:00" data-status="active" data-minutes="424" data-name="cb mass" data-x="213" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">CB mass</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 405')">(213, 405)</td>
   <td class="px-6 py-4 text-sm">
@@ -438,7 +625,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T17:41:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T17:41:00" data-status="active" data-minutes="469" data-name="dwarf 드워프" data-x="209" data-y="417">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Dwarf 드워프</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 417')">(209, 417)</td>
   <td class="px-6 py-4 text-sm">
@@ -451,7 +638,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T17:43:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T17:43:00" data-status="active" data-minutes="471" data-name="jerry noflocksgiven" data-x="209" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Jerry noflocksgiven</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 409')">(209, 409)</td>
   <td class="px-6 py-4 text-sm">
@@ -464,7 +651,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T17:43:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T17:43:00" data-status="active" data-minutes="471" data-name="bad azz mom" data-x="209" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">BAD AZZ MOM</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 413')">(209, 413)</td>
   <td class="px-6 py-4 text-sm">
@@ -477,7 +664,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T18:54:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T18:54:00" data-status="active" data-minutes="542" data-name="crazy mazy" data-x="221" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Crazy Mazy</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('221, 409')">(221, 409)</td>
   <td class="px-6 py-4 text-sm">
@@ -490,7 +677,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T19:05:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T19:05:00" data-status="active" data-minutes="553" data-name="팍준jun" data-x="316" data-y="585">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">팍준Jun</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('316, 585')">(316, 585)</td>
   <td class="px-6 py-4 text-sm">
@@ -503,7 +690,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T19:06:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T19:06:00" data-status="active" data-minutes="554" data-name="ʚ세레낭 serena" data-x="225" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">ʚ세레낭 serena</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('225, 405')">(225, 405)</td>
   <td class="px-6 py-4 text-sm">
@@ -516,7 +703,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T20:20:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T20:20:00" data-status="active" data-minutes="628" data-name="mm1234567" data-x="237" data-y="425">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">MM1234567</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 425')">(237, 425)</td>
   <td class="px-6 py-4 text-sm">
@@ -529,7 +716,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T20:42:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T20:42:00" data-status="active" data-minutes="650" data-name="bubbagmpshrmp 버바" data-x="676" data-y="187">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">BubbaGmpShrmp 버바</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('676, 187')">(676, 187)</td>
   <td class="px-6 py-4 text-sm">
@@ -542,7 +729,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T20:55:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T20:55:00" data-status="active" data-minutes="663" data-name="dafungi" data-x="213" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Dafungi</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 401')">(213, 401)</td>
   <td class="px-6 py-4 text-sm">
@@ -555,7 +742,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T21:15:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T21:15:00" data-status="active" data-minutes="683" data-name="nico062025" data-x="992" data-y="141">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Nico062025</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('992, 141')">(992, 141)</td>
   <td class="px-6 py-4 text-sm">
@@ -568,7 +755,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T21:27:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T21:27:00" data-status="active" data-minutes="695" data-name="ninjajuni주니" data-x="209" data-y="425">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Ninjajuni주니</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 425')">(209, 425)</td>
   <td class="px-6 py-4 text-sm">
@@ -581,7 +768,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T21:33:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T21:33:00" data-status="active" data-minutes="701" data-name="람보르bor" data-x="221" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">람보르bor</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('221, 413')">(221, 413)</td>
   <td class="px-6 py-4 text-sm">
@@ -594,7 +781,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T22:43:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T22:43:00" data-status="active" data-minutes="771" data-name="남궁시향" data-x="318" data-y="589">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">남궁시향</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('318, 589')">(318, 589)</td>
   <td class="px-6 py-4 text-sm">
@@ -607,7 +794,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T22:58:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T22:58:00" data-status="active" data-minutes="786" data-name="하루살 이" data-x="213" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">하루살 이</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 421')">(213, 421)</td>
   <td class="px-6 py-4 text-sm">
@@ -620,7 +807,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T23:41:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T23:41:00" data-status="active" data-minutes="829" data-name="60계오리" data-x="229" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">60계오리</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('229, 409')">(229, 409)</td>
   <td class="px-6 py-4 text-sm">
@@ -633,7 +820,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T23:45:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T23:45:00" data-status="active" data-minutes="833" data-name="pemason" data-x="209" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Pemason</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 401')">(209, 401)</td>
   <td class="px-6 py-4 text-sm">
@@ -646,7 +833,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T23:45:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T23:45:00" data-status="active" data-minutes="833" data-name="배꼽 lilbutton" data-x="305" data-y="565">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">배꼽 LilButton</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('305, 565')">(305, 565)</td>
   <td class="px-6 py-4 text-sm">
@@ -659,7 +846,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T23:47:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T23:47:00" data-status="active" data-minutes="835" data-name="구아바망고mango" data-x="497" data-y="429">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">구아바망고Mango</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('497, 429')">(497, 429)</td>
   <td class="px-6 py-4 text-sm">
@@ -672,7 +859,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T23:47:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T23:47:00" data-status="active" data-minutes="835" data-name="belle gunness" data-x="229" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Belle Gunness</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('229, 405')">(229, 405)</td>
   <td class="px-6 py-4 text-sm">
@@ -685,7 +872,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-05T23:52:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-05T23:52:00" data-status="active" data-minutes="840" data-name="영웅gen ss lee" data-x="213" data-y="417">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">영웅GEN SS LEE</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 417')">(213, 417)</td>
   <td class="px-6 py-4 text-sm">
@@ -698,7 +885,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T00:34:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T00:34:00" data-status="active" data-minutes="882" data-name="미쟝ㅡamy" data-x="237" data-y="417">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">미쟝ㅡAmy</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 417')">(237, 417)</td>
   <td class="px-6 py-4 text-sm">
@@ -711,7 +898,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T01:52:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T01:52:00" data-status="active" data-minutes="960" data-name="ꕤ딩 dingꕤ" data-x="224" data-y="435">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">ꕤ딩 Dingꕤ</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('224, 435')">(224, 435)</td>
   <td class="px-6 py-4 text-sm">
@@ -724,7 +911,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T02:42:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T02:42:00" data-status="active" data-minutes="1010" data-name="dirt boy" data-x="301" data-y="577">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Dirt boy</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('301, 577')">(301, 577)</td>
   <td class="px-6 py-4 text-sm">
@@ -737,7 +924,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T02:45:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T02:45:00" data-status="active" data-minutes="1013" data-name="sysbryte" data-x="301" data-y="561">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">SysBryte</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('301, 561')">(301, 561)</td>
   <td class="px-6 py-4 text-sm">
@@ -750,7 +937,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T06:41:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T06:41:00" data-status="active" data-minutes="1249" data-name="belafiladelfo" data-x="314" data-y="605">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Belafiladelfo</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('314, 605')">(314, 605)</td>
   <td class="px-6 py-4 text-sm">
@@ -763,7 +950,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T07:04:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T07:04:00" data-status="active" data-minutes="1272" data-name="여라하 laha" data-x="230" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">여라하 Laha</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('230, 413')">(230, 413)</td>
   <td class="px-6 py-4 text-sm">
@@ -776,7 +963,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T08:44:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T08:44:00" data-status="active" data-minutes="1372" data-name="snick 스닉" data-x="217" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Snick 스닉</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('217, 401')">(217, 401)</td>
   <td class="px-6 py-4 text-sm">
@@ -789,7 +976,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T09:32:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T09:32:00" data-status="active" data-minutes="1420" data-name="no to the dictator" data-x="241" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">No To The Dictator</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('241, 413')">(241, 413)</td>
   <td class="px-6 py-4 text-sm">
@@ -802,7 +989,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T09:42:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T09:42:00" data-status="active" data-minutes="1430" data-name="general schwartzkoff" data-x="306" data-y="593">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">General Schwartzkoff</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('306, 593')">(306, 593)</td>
   <td class="px-6 py-4 text-sm">
@@ -815,7 +1002,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T11:26:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T11:26:00" data-status="active" data-minutes="1534" data-name="angela안젤라" data-x="209" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Angela안젤라</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 421')">(209, 421)</td>
   <td class="px-6 py-4 text-sm">
@@ -828,7 +1015,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-06T16:20:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:20:00" data-status="active" data-minutes="1828" data-name="one baad nucca" data-x="218" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">One BAAD Nucca</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('218, 413')">(218, 413)</td>
   <td class="px-6 py-4 text-sm">
@@ -841,7 +1028,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-07T06:27:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T06:27:00" data-status="active" data-minutes="2675" data-name="boneyeric" data-x="307" data-y="581">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">BoneyEric</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('307, 581')">(307, 581)</td>
   <td class="px-6 py-4 text-sm">
@@ -854,7 +1041,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-07T12:44:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T12:44:00" data-status="active" data-minutes="3052" data-name="senator lamb chop" data-x="217" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Senator Lamb Chop</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('217, 405')">(217, 405)</td>
   <td class="px-6 py-4 text-sm">
@@ -867,7 +1054,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-08T08:42:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T08:42:00" data-status="active" data-minutes="4250" data-name="i am fudd 퍼드" data-x="233" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">i am fudd 퍼드</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('233, 405')">(233, 405)</td>
   <td class="px-6 py-4 text-sm">
@@ -880,7 +1067,7 @@
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50" data-datetime="2025-11-08T09:01:00">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T09:01:00" data-status="active" data-minutes="4269" data-name="icetee58" data-x="233" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">IceTee58</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('233, 409')">(233, 409)</td>
   <td class="px-6 py-4 text-sm">
@@ -896,279 +1083,661 @@
           </tbody>
         </table>
       </div>
-    </section>
-        <footer class="text-center mt-8 text-gray-500 text-sm">
-            <p>📋 좌표를 클릭하면 클립보드에 복사됩니다</p>
-            <div id="notificationStatus" class="mt-2 text-xs">
-                <span class="text-orange-600">🔔 알림 권한을 확인하는 중...</span>
-            </div>
-        </footer>
+      <div id="noResults" class="hidden text-center py-12 text-gray-500">
+        검색 결과가 없습니다.
+      </div>
     </div>
 
-    <script>
-        function showNotification(message, type) {
-            // 기존 알림이 있으면 제거
-            const existingNotification = document.querySelector('.notification');
-            if (existingNotification) {
-                existingNotification.remove();
-            }
+    <!-- Map View -->
+    <div id="mapView" class="bg-white rounded-b-lg shadow-md p-6 hidden">
+      <div class="mb-4 flex justify-between items-center flex-wrap gap-3">
+        <h3 class="text-lg font-semibold text-gray-800">라스트워 시즌1 맵 (1000x1000)</h3>
+        <div class="text-sm text-gray-600">
+          <span class="inline-block w-3 h-3 rounded-full bg-green-500 mr-1"></span> 활성
+          <span class="inline-block w-3 h-3 rounded-full bg-red-500 ml-3 mr-1"></span> 긴급
+          <span class="inline-block w-3 h-3 rounded-full bg-gray-400 ml-3 mr-1"></span> 만료
+        </div>
+      </div>
+      <div class="relative border-2 border-gray-300 rounded" style="aspect-ratio: 1/1; max-height: 700px;">
+        <svg id="mapSvg" class="w-full h-full" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+          <!-- Grid lines -->
+          <defs>
+            <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="1000" height="1000" fill="url(#grid)" />
 
-            const notification = document.createElement('div');
-            notification.className = `notification fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 ${
-                type === 'success' ? 'bg-green-500 text-white' :
-                'bg-blue-500 text-white'
-            }`;
-            notification.innerHTML = `
-                <div class="flex items-center">
-                    <span>${message}</span>
-                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200 font-bold">✕</button>
-                </div>
-            `;
+          <!-- Markers will be inserted here -->
+          <g id="markers"></g>
+        </svg>
 
-            document.body.appendChild(notification);
+        <!-- Zoom Controls -->
+        <div class="zoom-controls">
+          <div id="zoomLevel" class="zoom-btn" style="font-size: 12px; font-weight: normal; cursor: default; background: rgba(255,255,255,0.95);">×1.0</div>
+          <button class="zoom-btn" onclick="zoomIn()" title="확대">+</button>
+          <button class="zoom-btn" onclick="zoomOut()" title="축소">−</button>
+          <button class="zoom-btn" onclick="resetZoom()" title="초기화" style="font-size: 16px;">⟲</button>
+        </div>
 
-            // 3초 후 자동 제거
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.remove();
-                }
-            }, 3000);
-        }
+        <!-- Info Card -->
+        <div id="mapInfoCard" class="map-info-card">
+          <div class="flex justify-between items-start mb-3">
+            <h4 class="text-lg font-bold text-gray-800" id="infoName"></h4>
+            <button onclick="closeInfoCard()" class="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
+          </div>
+          <div class="space-y-2">
+            <div class="text-sm text-gray-600">
+              <span class="font-semibold">상태:</span>
+              <span id="infoStatus" class="ml-2"></span>
+            </div>
+            <div id="infoExpireTime" class="text-sm text-gray-600" style="display: none;">
+              <span class="font-semibold">종료시각:</span>
+              <span id="infoExpireTimeValue" class="ml-2"></span>
+            </div>
+            <div class="text-sm text-gray-600">
+              <span class="font-semibold">남은시간:</span>
+              <span id="infoCountdown" class="ml-2"></span>
+            </div>
+            <div class="pt-2 border-t border-gray-200">
+              <div class="text-xs text-gray-500 mb-1">좌표 (클릭하여 복사)</div>
+              <button id="coordCopyBtn" class="coord-copy-btn w-full px-4 py-2 bg-gray-100 text-gray-800 rounded-md font-mono text-sm font-semibold hover:bg-blue-500 hover:text-white transition">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        function copyCoordinates(coordinates) {
-            navigator.clipboard.writeText(coordinates).then(() => {
-                showNotification(`좌표 ${coordinates}가 복사되었습니다!`, 'success');
-            }).catch(() => {
-                // 클립보드 API가 지원되지 않는 경우 대체 방법
-                const textArea = document.createElement('textarea');
-                textArea.value = coordinates;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showNotification(`좌표 ${coordinates}가 복사되었습니다!`, 'success');
-            });
-        }
+  </div>
 
-        function updateCurrentTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('ko-KR', {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            document.getElementById('currentTime').textContent = `현재 시간: ${timeString}`;
-        }
+  <script>
+    const BASE_TIME = new Date('2025-11-05T09:52:30');
+    const MAP_DATA = [{"name": "Anarchist Sheep", "x": 914, "y": 137, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Nate the citadel", "x": 86, "y": 613, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "\uc18c\uba78\ud558\uc600\ub2e4 Ben", "x": 954, "y": 651, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "OK13", "x": 933, "y": 691, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Farside \uc808\ub9dd", "x": 747, "y": 951, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Mukkis", "x": 474, "y": 911, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "\ub2ec\ucf64\ud55c\ucc45\ubc29Sweet", "x": 855, "y": 39, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "unwooly guru \uad6c\ub8e8", "x": 205, "y": 421, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Nebula Flux", "x": 955, "y": 933, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Ashley1586", "x": 872, "y": 921, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Moosienation", "x": 673, "y": 917, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Benty22", "x": 930, "y": 865, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Farthobbler", "x": 297, "y": 569, "is_expired": false, "total_minutes": 18, "countdown": "18\ubd84 0\ucd08", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\uc804 10:10"}, {"name": "\ub098\uc774\uc218\uc7a5", "x": 491, "y": 441, "is_expired": false, "total_minutes": 30, "countdown": "30\ubd84 0\ucd08", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\uc804 10:22"}, {"name": "RaiseHellPraiseDale", "x": 311, "y": 605, "is_expired": false, "total_minutes": 60, "countdown": "1\uc2dc\uac04 0\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\uc804 10:52"}, {"name": "RachelRene \ub77c\ud5ec", "x": 224, "y": 413, "is_expired": false, "total_minutes": 69, "countdown": "1\uc2dc\uac04 9\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\uc804 11:01"}, {"name": "MissAmericana13", "x": 227, "y": 413, "is_expired": false, "total_minutes": 70, "countdown": "1\uc2dc\uac04 10\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\uc804 11:02"}, {"name": "Jenna \uc81c\ub098", "x": 293, "y": 577, "is_expired": false, "total_minutes": 119, "countdown": "1\uc2dc\uac04 59\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\uc804 11:51"}, {"name": "DirkD1ggler", "x": 306, "y": 589, "is_expired": false, "total_minutes": 147, "countdown": "2\uc2dc\uac04 27\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 12:19"}, {"name": "BAA \uc790\uc774\uc5b8\ud2b8", "x": 213, "y": 409, "is_expired": false, "total_minutes": 153, "countdown": "2\uc2dc\uac04 33\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 12:25"}, {"name": "\ub2c8\ubb54\ub300", "x": 215, "y": 413, "is_expired": false, "total_minutes": 207, "countdown": "3\uc2dc\uac04 27\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 01:19"}, {"name": "Seababy", "x": 225, "y": 401, "is_expired": false, "total_minutes": 217, "countdown": "3\uc2dc\uac04 37\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 01:29"}, {"name": "General z0d", "x": 297, "y": 565, "is_expired": false, "total_minutes": 225, "countdown": "3\uc2dc\uac04 45\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 01:37"}, {"name": "Youm\uc0ac\uc7a5", "x": 237, "y": 421, "is_expired": false, "total_minutes": 280, "countdown": "4\uc2dc\uac04 40\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 02:32"}, {"name": "\ub369\uadf8\ub801", "x": 325, "y": 589, "is_expired": false, "total_minutes": 322, "countdown": "5\uc2dc\uac04 22\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 03:14"}, {"name": "Ezenekai", "x": 224, "y": 409, "is_expired": false, "total_minutes": 330, "countdown": "5\uc2dc\uac04 30\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 03:22"}, {"name": "Brodi32", "x": 986, "y": 553, "is_expired": false, "total_minutes": 352, "countdown": "5\uc2dc\uac04 52\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 03:44"}, {"name": "Dr H H Holmes \ud648\uc988", "x": 427, "y": 733, "is_expired": false, "total_minutes": 362, "countdown": "6\uc2dc\uac04 2\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 03:54"}, {"name": "Mite\uc74c\uba54", "x": 221, "y": 401, "is_expired": false, "total_minutes": 368, "countdown": "6\uc2dc\uac04 8\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 04:00"}, {"name": "ANNA BAA", "x": 217, "y": 409, "is_expired": false, "total_minutes": 373, "countdown": "6\uc2dc\uac04 13\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 04:05"}, {"name": "CB mass", "x": 213, "y": 405, "is_expired": false, "total_minutes": 424, "countdown": "7\uc2dc\uac04 4\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 04:56"}, {"name": "Dwarf \ub4dc\uc6cc\ud504", "x": 209, "y": 417, "is_expired": false, "total_minutes": 469, "countdown": "7\uc2dc\uac04 49\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 05:41"}, {"name": "Jerry noflocksgiven", "x": 209, "y": 409, "is_expired": false, "total_minutes": 471, "countdown": "7\uc2dc\uac04 51\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 05:43"}, {"name": "BAD AZZ MOM", "x": 209, "y": 413, "is_expired": false, "total_minutes": 471, "countdown": "7\uc2dc\uac04 51\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 05:43"}, {"name": "Crazy Mazy", "x": 221, "y": 409, "is_expired": false, "total_minutes": 542, "countdown": "9\uc2dc\uac04 2\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 06:54"}, {"name": "\ud30d\uc900Jun", "x": 316, "y": 585, "is_expired": false, "total_minutes": 553, "countdown": "9\uc2dc\uac04 13\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 07:05"}, {"name": "\u029a\uc138\ub808\ub0ad serena", "x": 225, "y": 405, "is_expired": false, "total_minutes": 554, "countdown": "9\uc2dc\uac04 14\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 07:06"}, {"name": "MM1234567", "x": 237, "y": 425, "is_expired": false, "total_minutes": 628, "countdown": "10\uc2dc\uac04 28\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 08:20"}, {"name": "BubbaGmpShrmp \ubc84\ubc14", "x": 676, "y": 187, "is_expired": false, "total_minutes": 650, "countdown": "10\uc2dc\uac04 50\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 08:42"}, {"name": "Dafungi", "x": 213, "y": 401, "is_expired": false, "total_minutes": 663, "countdown": "11\uc2dc\uac04 3\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 08:55"}, {"name": "Nico062025", "x": 992, "y": 141, "is_expired": false, "total_minutes": 683, "countdown": "11\uc2dc\uac04 23\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 09:15"}, {"name": "Ninjajuni\uc8fc\ub2c8", "x": 209, "y": 425, "is_expired": false, "total_minutes": 695, "countdown": "11\uc2dc\uac04 35\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 09:27"}, {"name": "\ub78c\ubcf4\ub974bor", "x": 221, "y": 413, "is_expired": false, "total_minutes": 701, "countdown": "11\uc2dc\uac04 41\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 09:33"}, {"name": "\ub0a8\uad81\uc2dc\ud5a5", "x": 318, "y": 589, "is_expired": false, "total_minutes": 771, "countdown": "12\uc2dc\uac04 51\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 10:43"}, {"name": "\ud558\ub8e8\uc0b4 \uc774", "x": 213, "y": 421, "is_expired": false, "total_minutes": 786, "countdown": "13\uc2dc\uac04 6\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 10:58"}, {"name": "60\uacc4\uc624\ub9ac", "x": 229, "y": 409, "is_expired": false, "total_minutes": 829, "countdown": "13\uc2dc\uac04 49\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 11:41"}, {"name": "Pemason", "x": 209, "y": 401, "is_expired": false, "total_minutes": 833, "countdown": "13\uc2dc\uac04 53\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 11:45"}, {"name": "\ubc30\uaf3d LilButton", "x": 305, "y": 565, "is_expired": false, "total_minutes": 833, "countdown": "13\uc2dc\uac04 53\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 11:45"}, {"name": "\uad6c\uc544\ubc14\ub9dd\uace0Mango", "x": 497, "y": 429, "is_expired": false, "total_minutes": 835, "countdown": "13\uc2dc\uac04 55\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 11:47"}, {"name": "Belle Gunness", "x": 229, "y": 405, "is_expired": false, "total_minutes": 835, "countdown": "13\uc2dc\uac04 55\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 11:47"}, {"name": "\uc601\uc6c5GEN SS LEE", "x": 213, "y": 417, "is_expired": false, "total_minutes": 840, "countdown": "14\uc2dc\uac04 0\ubd84", "date_disp": "11/05 (\uc218)", "time_disp": "\uc624\ud6c4 11:52"}, {"name": "\ubbf8\uc7dd\u3161Amy", "x": 237, "y": 417, "is_expired": false, "total_minutes": 882, "countdown": "14\uc2dc\uac04 42\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 12:34"}, {"name": "\ua564\ub529 Ding\ua564", "x": 224, "y": 435, "is_expired": false, "total_minutes": 960, "countdown": "16\uc2dc\uac04 0\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 01:52"}, {"name": "Dirt boy", "x": 301, "y": 577, "is_expired": false, "total_minutes": 1010, "countdown": "16\uc2dc\uac04 50\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 02:42"}, {"name": "SysBryte", "x": 301, "y": 561, "is_expired": false, "total_minutes": 1013, "countdown": "16\uc2dc\uac04 53\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 02:45"}, {"name": "Belafiladelfo", "x": 314, "y": 605, "is_expired": false, "total_minutes": 1249, "countdown": "20\uc2dc\uac04 49\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 06:41"}, {"name": "\uc5ec\ub77c\ud558 Laha", "x": 230, "y": 413, "is_expired": false, "total_minutes": 1272, "countdown": "21\uc2dc\uac04 12\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 07:04"}, {"name": "Snick \uc2a4\ub2c9", "x": 217, "y": 401, "is_expired": false, "total_minutes": 1372, "countdown": "22\uc2dc\uac04 52\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 08:44"}, {"name": "No To The Dictator", "x": 241, "y": 413, "is_expired": false, "total_minutes": 1420, "countdown": "23\uc2dc\uac04 40\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 09:32"}, {"name": "General Schwartzkoff", "x": 306, "y": 593, "is_expired": false, "total_minutes": 1430, "countdown": "23\uc2dc\uac04 50\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 09:42"}, {"name": "Angela\uc548\uc824\ub77c", "x": 209, "y": 421, "is_expired": false, "total_minutes": 1534, "countdown": "25\uc2dc\uac04 34\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\uc804 11:26"}, {"name": "One BAAD Nucca", "x": 218, "y": 413, "is_expired": false, "total_minutes": 1828, "countdown": "30\uc2dc\uac04 28\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:20"}, {"name": "BoneyEric", "x": 307, "y": 581, "is_expired": false, "total_minutes": 2675, "countdown": "44\uc2dc\uac04 35\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 06:27"}, {"name": "Senator Lamb Chop", "x": 217, "y": 405, "is_expired": false, "total_minutes": 3052, "countdown": "50\uc2dc\uac04 52\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\ud6c4 12:44"}, {"name": "i am fudd \ud37c\ub4dc", "x": 233, "y": 405, "is_expired": false, "total_minutes": 4250, "countdown": "70\uc2dc\uac04 50\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\uc804 08:42"}, {"name": "IceTee58", "x": 233, "y": 409, "is_expired": false, "total_minutes": 4269, "countdown": "71\uc2dc\uac04 9\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\uc804 09:01"}];
+    let currentFilter = 'all';
+    let currentView = 'list';
 
-        function formatCountdown(milliseconds) {
-            if (milliseconds <= 0) return '지남';
+    // 줌 관련 변수
+    let currentZoom = 1;
+    let currentPanX = 0;
+    let currentPanY = 0;
+    let selectedMarker = null;
 
-            const totalSeconds = Math.floor(milliseconds / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
+    // 드래그 관련 변수
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let dragStartPanX = 0;
+    let dragStartPanY = 0;
 
-            if (hours > 0) {
-                return `${hours}시간 ${minutes}분`;
-            } else if (minutes > 0) {
-                return `${minutes}분 ${seconds}초`;
-            } else {
-                return `${seconds}초`;
-            }
-        }
-
-        function updateCountdowns() {
-            const now = new Date();
-            const rows = document.querySelectorAll('tr[data-datetime]');
-
-            rows.forEach(row => {
-                const datetimeString = row.getAttribute('data-datetime');
-                const targetTime = new Date(datetimeString);
-                const timeDiff = targetTime.getTime() - now.getTime();
-
-                const countdownElement = row.querySelector('.countdown-display');
-                const timeDisplayElement = row.querySelector('.time-display');
-
-                if (timeDiff <= 0) {
-                    // 시간이 지난 경우 어둡게 표시
-                    row.classList.add('opacity-50');
-                    row.classList.remove('hover:bg-gray-50');
-                    row.classList.add('hover:bg-gray-100');
-                    countdownElement.textContent = '지남';
-                    countdownElement.className = 'countdown-display text-xs font-mono ml-4 text-gray-400';
-                    timeDisplayElement.className = 'time-display text-gray-400';
-                } else {
-                    // 아직 시간이 남은 경우
-                    row.classList.remove('opacity-50');
-                    countdownElement.textContent = formatCountdown(timeDiff);
-
-                    // 1시간 이내면 빨간색, 3시간 이내면 주황색, 그 외는 초록색
-                    if (timeDiff <= 3600000) { // 1시간
-                        countdownElement.className = 'countdown-display text-xs font-mono ml-4 text-red-600 font-bold';
-                    } else if (timeDiff <= 10800000) { // 3시간
-                        countdownElement.className = 'countdown-display text-xs font-mono ml-4 text-orange-600';
-                    } else {
-                        countdownElement.className = 'countdown-display text-xs font-mono ml-4 text-green-600';
-                    }
-
-                    timeDisplayElement.className = 'time-display text-gray-600';
-                }
-            });
-        }
-
-        // 알림 권한 요청 및 관리
-        let notificationPermission = false;
-        let notifiedEvents = new Set(); // 이미 알림을 보낸 이벤트들을 추적
-
-        function updateNotificationStatus() {
-            const statusElement = document.getElementById('notificationStatus');
-            if (!statusElement) return;
-
-            if (!('Notification' in window)) {
-                statusElement.innerHTML = '<span class="text-red-600">❌ 이 브라우저는 알림을 지원하지 않습니다</span>';
-            } else if (Notification.permission === 'granted') {
-                statusElement.innerHTML = '<span class="text-green-600">✅ 데스크톱 알림 활성화됨 (3분전, 5분전 알림)</span>';
-            } else if (Notification.permission === 'denied') {
-                statusElement.innerHTML = '<span class="text-red-600">🚫 알림이 차단되었습니다. 브라우저 설정에서 허용해주세요</span>';
-            } else {
-                statusElement.innerHTML = '<span class="text-orange-600">🔔 알림 권한을 허용하면 3분전, 5분전에 알림을 받을 수 있어요</span>';
-            }
-        }
-
-        function requestNotificationPermission() {
-            if ('Notification' in window) {
-                if (Notification.permission === 'granted') {
-                    notificationPermission = true;
-                    updateNotificationStatus();
-                } else if (Notification.permission !== 'denied') {
-                    Notification.requestPermission().then(permission => {
-                        if (permission === 'granted') {
-                            notificationPermission = true;
-                            showNotification('알림이 활성화되었습니다! 3분전, 5분전에 알림을 받을 수 있어요.', 'success');
-                        }
-                        updateNotificationStatus();
-                    });
-                } else {
-                    updateNotificationStatus();
-                }
-            } else {
-                updateNotificationStatus();
-            }
-        }
-
-        function sendDesktopNotification(title, body, icon = '🏰') {
-            if (notificationPermission && 'Notification' in window) {
-                const notification = new Notification(title, {
-                    body: body,
-                    icon: 'data:image/svg+xml;base64,' + btoa(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${icon}</text></svg>`),
-                    requireInteraction: true, // 사용자가 클릭할 때까지 유지
-                    tag: 'baad-notification' // 중복 알림 방지
-                });
-
-                // 5초 후 자동 닫기
-                setTimeout(() => {
-                    notification.close();
-                }, 5000);
-
-                return notification;
-            }
-        }
-
-        function checkUpcomingEvents() {
-            if (!notificationPermission) return;
-
-            const now = new Date();
-            const rows = document.querySelectorAll('tr[data-datetime]');
-
-            rows.forEach(row => {
-                const datetimeString = row.getAttribute('data-datetime');
-                const targetTime = new Date(datetimeString);
-                const timeDiff = targetTime.getTime() - now.getTime();
-                const nickname = row.querySelector('td:first-child').textContent.trim();
-                const coordinates = row.querySelector('td:nth-child(2)').textContent.trim();
-
-                // 5분전 알림 (4분 50초 ~ 5분 10초 사이)
-                if (timeDiff > 290000 && timeDiff <= 310000) {
-                    const eventKey = `${datetimeString}-5min`;
-                    if (!notifiedEvents.has(eventKey)) {
-                        notifiedEvents.add(eventKey);
-                        sendDesktopNotification(
-                            '🔔 BAAD 집결지 5분전 알림',
-                            `${nickname}님이 5분 후 ${coordinates}에 등장합니다!`,
-                            '⏰'
-                        );
-                    }
-                }
-
-                // 3분전 알림 (2분 50초 ~ 3분 10초 사이)
-                if (timeDiff > 170000 && timeDiff <= 190000) {
-                    const eventKey = `${datetimeString}-3min`;
-                    if (!notifiedEvents.has(eventKey)) {
-                        notifiedEvents.add(eventKey);
-                        sendDesktopNotification(
-                            '🚨 BAAD 집결지 3분전 알림',
-                            `${nickname}님이 3분 후 ${coordinates}에 등장합니다!`,
-                            '🔥'
-                        );
-                    }
-                }
-            });
-        }
-
-        // 페이지 로드 시 초기화
-        window.addEventListener('load', () => {
-            updateCurrentTime();
-            updateCountdowns();
-
-            // 알림 권한 요청 (페이지 로드 후 3초 뒤)
-            setTimeout(() => {
-                requestNotificationPermission();
-            }, 3000);
-
-            // 1초마다 업데이트
-            setInterval(() => {
-                updateCurrentTime();
-                updateCountdowns();
-                checkUpcomingEvents(); // 알림 체크 추가
-            }, 1000);
+    // 좌표 복사
+    function copyCoordinates(coords) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(coords).then(function() {
+          alert('좌표 ' + coords + ' 복사됨');
+        }, function() {
+          alert('복사 실패');
         });
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993014e66033c43f',t:'MTc2MTIxMDQyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+      } else {
+        alert('클립보드 권한 없음');
+      }
+    }
+
+    // 뷰 전환
+    function switchView(view) {
+      currentView = view;
+      const listView = document.getElementById('listView');
+      const mapView = document.getElementById('mapView');
+      const tabs = document.querySelectorAll('.tab-btn');
+
+      tabs.forEach(tab => {
+        if (tab.dataset.view === view) {
+          tab.classList.add('tab-active');
+        } else {
+          tab.classList.remove('tab-active');
+        }
+      });
+
+      if (view === 'list') {
+        listView.classList.remove('hidden');
+        mapView.classList.add('hidden');
+      } else {
+        listView.classList.add('hidden');
+        mapView.classList.remove('hidden');
+        // 지도형으로 전환 시에만 렌더링
+        setTimeout(() => renderMap(), 50); // 약간의 딜레이로 중복 방지
+      }
+    }
+
+    // 필터 적용
+    function filterRows(filter) {
+      currentFilter = filter;
+      const rows = document.querySelectorAll('.commander-row');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      let visibleCount = 0;
+
+      filterBtns.forEach(btn => {
+        if (btn.dataset.filter === filter) {
+          btn.classList.add('filter-active');
+        } else {
+          btn.classList.remove('filter-active');
+        }
+      });
+
+      rows.forEach(row => {
+        const status = row.dataset.status;
+        const minutes = parseInt(row.dataset.minutes);
+        let show = false;
+
+        if (filter === 'all') show = true;
+        else if (filter === 'active') show = status === 'active';
+        else if (filter === 'expired') show = status === 'expired';
+        else if (filter === 'critical') show = status === 'active' && minutes <= 30;
+
+        if (show) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+      updateStats();
+      if (currentView === 'map') renderMap();
+    }
+
+    // 검색
+    function searchCommanders() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('.commander-row');
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const name = row.dataset.name;
+        const matchesSearch = name.includes(searchTerm);
+        const status = row.dataset.status;
+        const minutes = parseInt(row.dataset.minutes);
+        let matchesFilter = false;
+
+        if (currentFilter === 'all') matchesFilter = true;
+        else if (currentFilter === 'active') matchesFilter = status === 'active';
+        else if (currentFilter === 'expired') matchesFilter = status === 'expired';
+        else if (currentFilter === 'critical') matchesFilter = status === 'active' && minutes <= 30;
+
+        if (matchesSearch && matchesFilter) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+      if (currentView === 'map') renderMap();
+    }
+
+    // 통계 업데이트
+    function updateStats() {
+      const rows = document.querySelectorAll('.commander-row');
+      let active = 0, expired = 0, critical = 0;
+
+      rows.forEach(row => {
+        const status = row.dataset.status;
+        const minutes = parseInt(row.dataset.minutes);
+
+        if (status === 'active') {
+          active++;
+          if (minutes <= 30) critical++;
+        } else {
+          expired++;
+        }
+      });
+
+      document.getElementById('statActive').textContent = active;
+      document.getElementById('statExpired').textContent = expired;
+      document.getElementById('statCritical').textContent = critical;
+    }
+
+    // 줌 레벨 표시 업데이트
+    function updateZoomDisplay() {
+      const zoomLevelEl = document.getElementById('zoomLevel');
+      if (zoomLevelEl) {
+        zoomLevelEl.textContent = `×${currentZoom.toFixed(1)}`;
+        // 확대 상태 시각적 표시
+        if (currentZoom > 1) {
+          zoomLevelEl.style.background = 'rgb(59 130 246)';
+          zoomLevelEl.style.color = 'white';
+          zoomLevelEl.style.fontWeight = 'bold';
+        } else {
+          zoomLevelEl.style.background = 'rgba(255,255,255,0.95)';
+          zoomLevelEl.style.color = 'rgb(59 130 246)';
+          zoomLevelEl.style.fontWeight = 'normal';
+        }
+      }
+    }
+
+    // 줌 기능
+    function updateViewBox() {
+      const svg = document.getElementById('mapSvg');
+      const size = 1000 / currentZoom;
+      const x = currentPanX - size / 2;
+      const y = currentPanY - size / 2;
+      svg.setAttribute('viewBox', `${x} ${y} ${size} ${size}`);
+      updateZoomDisplay();
+    }
+
+    function zoomIn() {
+      if (currentZoom < 5) {
+        currentZoom *= 1.5;
+        if (currentZoom > 5) currentZoom = 5;
+        updateViewBox();
+      }
+    }
+
+    function zoomOut() {
+      if (currentZoom > 1) {
+        currentZoom /= 1.5;
+        if (currentZoom < 1) currentZoom = 1;
+        updateViewBox();
+      }
+    }
+
+    function resetZoom() {
+      currentZoom = 1;
+      currentPanX = 500;
+      currentPanY = 500;
+      updateViewBox();
+    }
+
+    // 정보 카드 표시
+    function showInfoCard(commander) {
+      const infoCard = document.getElementById('mapInfoCard');
+      const infoName = document.getElementById('infoName');
+      const infoStatus = document.getElementById('infoStatus');
+      const infoExpireTime = document.getElementById('infoExpireTime');
+      const infoExpireTimeValue = document.getElementById('infoExpireTimeValue');
+      const infoCountdown = document.getElementById('infoCountdown');
+      const coordCopyBtn = document.getElementById('coordCopyBtn');
+
+      infoName.textContent = commander.name;
+
+      // 상태 표시
+      if (commander.is_expired) {
+        infoStatus.innerHTML = '<span class="text-gray-500">🔴 만료됨</span>';
+        infoExpireTime.style.display = 'none';
+      } else if (commander.total_minutes <= 30) {
+        infoStatus.innerHTML = '<span class="text-red-600">⚠️ 긴급 (30분 이하)</span>';
+        infoExpireTime.style.display = 'block';
+        infoExpireTimeValue.textContent = `${commander.date_disp} ${commander.time_disp}`;
+      } else {
+        infoStatus.innerHTML = '<span class="text-green-600">✅ 활성</span>';
+        infoExpireTime.style.display = 'block';
+        infoExpireTimeValue.textContent = `${commander.date_disp} ${commander.time_disp}`;
+      }
+
+      infoCountdown.textContent = commander.countdown;
+
+      const coords = `${commander.x}, ${commander.y}`;
+      coordCopyBtn.textContent = `(${coords})`;
+      coordCopyBtn.onclick = () => {
+        copyCoordinates(coords);
+        coordCopyBtn.textContent = '✓ 복사됨!';
+        setTimeout(() => {
+          coordCopyBtn.textContent = `(${coords})`;
+        }, 1500);
+      };
+
+      infoCard.classList.add('show');
+    }
+
+    // 정보 카드 닫기
+    function closeInfoCard() {
+      document.getElementById('mapInfoCard').classList.remove('show');
+    }
+
+    // 지도 렌더링 - DOM 데이터 기반 (실시간 반영)
+    function renderMap() {
+      const markersGroup = document.getElementById('markers');
+      if (!markersGroup) return; // 마커 그룹이 없으면 중단
+
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+      // 기존 마커 완전히 제거 (중복 방지)
+      while (markersGroup.firstChild) {
+        markersGroup.removeChild(markersGroup.firstChild);
+      }
+
+      // 지도 재렌더링 시 선택 초기화
+      selectedMarker = null;
+
+      // DOM의 row 데이터를 사용 (실시간으로 업데이트되는 데이터)
+      const rows = document.querySelectorAll('.commander-row');
+
+      rows.forEach(row => {
+        // DOM에서 실시간 데이터 읽기
+        const name = row.querySelector('td:first-child').textContent.trim();
+        const x = parseInt(row.dataset.x);
+        const y = parseInt(row.dataset.y);
+        const status = row.dataset.status; // 'active' or 'expired'
+        const minutes = parseInt(row.dataset.minutes);
+        const datetime = row.dataset.datetime;
+
+        // 좌표가 유효하지 않으면 스킵
+        if (isNaN(x) || isNaN(y)) return;
+
+        // 필터 체크
+        const matchesSearch = name.toLowerCase().includes(searchTerm);
+        let matchesFilter = false;
+
+        if (currentFilter === 'all') matchesFilter = true;
+        else if (currentFilter === 'active') matchesFilter = status === 'active';
+        else if (currentFilter === 'expired') matchesFilter = status === 'expired';
+        else if (currentFilter === 'critical') matchesFilter = status === 'active' && minutes <= 30;
+
+        if (!matchesSearch || !matchesFilter) return;
+
+        // 색상 결정 - 실시간 상태 기반
+        let color;
+        if (status === 'expired') {
+          color = '#9CA3AF'; // gray
+        } else if (minutes <= 30) {
+          color = '#EF4444'; // red
+        } else {
+          color = '#10B981'; // green
+        }
+
+        // 카운트다운 텍스트 가져오기
+        const countdownEl = row.querySelector('.countdown-display');
+        const countdown = countdownEl ? countdownEl.textContent : '정보 없음';
+
+        // 날짜/시간 정보 가져오기
+        const timeDisplayEl = row.querySelector('.time-display');
+        let dateDisp = '-';
+        let timeDisp = '-';
+        if (timeDisplayEl) {
+          const dateEl = timeDisplayEl.querySelector('.text-xs');
+          const timeEl = timeDisplayEl.querySelector('div:not(.text-xs)');
+          if (dateEl) dateDisp = dateEl.textContent.trim();
+          if (timeEl) timeDisp = timeEl.textContent.trim();
+        }
+
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', x);
+        circle.setAttribute('cy', 1000 - y); // Y축 반전
+        circle.setAttribute('r', '8');
+        circle.setAttribute('fill', color);
+        circle.setAttribute('stroke', 'white');
+        circle.setAttribute('stroke-width', '2');
+        circle.classList.add('map-marker');
+        circle.dataset.name = name;
+
+        circle.addEventListener('click', (e) => {
+          e.stopPropagation();
+
+          // 이전 선택된 마커 하이라이트 제거
+          if (selectedMarker) {
+            selectedMarker.classList.remove('selected');
+          }
+
+          // 현재 마커 하이라이트
+          circle.classList.add('selected');
+          selectedMarker = circle;
+
+          // 실시간 데이터로 정보 카드 표시
+          const commanderData = {
+            name: name,
+            x: x,
+            y: y,
+            is_expired: status === 'expired',
+            total_minutes: minutes,
+            countdown: countdown,
+            date_disp: dateDisp,
+            time_disp: timeDisp
+          };
+
+          showInfoCard(commanderData);
+
+          // 클릭한 마커로 부드럽게 이동 (확대 없이)
+          // 확대된 상태일 때만 센터링
+          if (currentZoom > 1) {
+            currentPanX = x;
+            currentPanY = 1000 - y;
+            updateViewBox();
+          }
+        });
+
+        markersGroup.appendChild(circle);
+      });
+    }
+
+    // 맵 영역 클릭 시 정보 카드 닫기 및 줌 초기화
+    document.addEventListener('DOMContentLoaded', () => {
+      const mapSvg = document.getElementById('mapSvg');
+      const mapContainer = mapSvg.parentElement;
+
+      if (mapSvg) {
+        let clickTimeout = null;
+        let isClick = true;
+
+        mapSvg.addEventListener('mousedown', (e) => {
+          // 마커 클릭이 아닐 때만 드래그 시작
+          if (e.target === mapSvg || e.target.tagName === 'rect' || e.target.tagName === 'g') {
+            isDragging = true;
+            isClick = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            dragStartPanX = currentPanX;
+            dragStartPanY = currentPanY;
+            mapSvg.classList.add('dragging');
+          }
+        });
+
+        mapSvg.addEventListener('mousemove', (e) => {
+          if (isDragging) {
+            isClick = false;
+            const rect = mapSvg.getBoundingClientRect();
+            const scaleX = 1000 / currentZoom / rect.width;
+            const scaleY = 1000 / currentZoom / rect.height;
+            const dx = (e.clientX - dragStartX) * scaleX;
+            const dy = (e.clientY - dragStartY) * scaleY;
+
+            currentPanX = dragStartPanX - dx;
+            currentPanY = dragStartPanY - dy;
+
+            // 맵 경계 제한
+            const halfSize = 500 / currentZoom;
+            currentPanX = Math.max(halfSize, Math.min(1000 - halfSize, currentPanX));
+            currentPanY = Math.max(halfSize, Math.min(1000 - halfSize, currentPanY));
+
+            updateViewBox();
+          }
+        });
+
+        mapSvg.addEventListener('mouseup', (e) => {
+          if (isDragging) {
+            isDragging = false;
+            mapSvg.classList.remove('dragging');
+
+            // 드래그가 아니라 클릭이었다면
+            if (isClick) {
+              closeInfoCard();
+              if (selectedMarker) {
+                selectedMarker.classList.remove('selected');
+                selectedMarker = null;
+              }
+            }
+          }
+        });
+
+        mapSvg.addEventListener('mouseleave', () => {
+          if (isDragging) {
+            isDragging = false;
+            mapSvg.classList.remove('dragging');
+          }
+        });
+
+        // 터치 드래그 및 핀치 줌
+        let touchStartForDrag = null;
+        let touchStartDistance = 0;
+        let touchStartZoom = 1;
+
+        mapContainer.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 1) {
+            // 단일 터치 - 드래그
+            const touch = e.touches[0];
+            if (e.target === mapSvg || e.target.tagName === 'rect' || e.target.tagName === 'g') {
+              isDragging = true;
+              isClick = true;
+              touchStartForDrag = touch;
+              dragStartX = touch.clientX;
+              dragStartY = touch.clientY;
+              dragStartPanX = currentPanX;
+              dragStartPanY = currentPanY;
+            }
+          } else if (e.touches.length === 2) {
+            // 핀치 줌
+            isDragging = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            touchStartDistance = Math.sqrt(dx * dx + dy * dy);
+            touchStartZoom = currentZoom;
+          }
+        });
+
+        mapContainer.addEventListener('touchmove', (e) => {
+          if (e.touches.length === 1 && isDragging) {
+            // 단일 터치 드래그
+            e.preventDefault();
+            isClick = false;
+            const touch = e.touches[0];
+            const rect = mapSvg.getBoundingClientRect();
+            const scaleX = 1000 / currentZoom / rect.width;
+            const scaleY = 1000 / currentZoom / rect.height;
+            const dx = (touch.clientX - dragStartX) * scaleX;
+            const dy = (touch.clientY - dragStartY) * scaleY;
+
+            currentPanX = dragStartPanX - dx;
+            currentPanY = dragStartPanY - dy;
+
+            // 맵 경계 제한
+            const halfSize = 500 / currentZoom;
+            currentPanX = Math.max(halfSize, Math.min(1000 - halfSize, currentPanX));
+            currentPanY = Math.max(halfSize, Math.min(1000 - halfSize, currentPanY));
+
+            updateViewBox();
+          } else if (e.touches.length === 2) {
+            // 핀치 줌
+            e.preventDefault();
+            isDragging = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const scale = distance / touchStartDistance;
+            const newZoom = touchStartZoom * scale;
+
+            if (newZoom >= 1 && newZoom <= 5) {
+              currentZoom = newZoom;
+              updateViewBox();
+            }
+          }
+        });
+
+        mapContainer.addEventListener('touchend', () => {
+          if (isDragging && isClick) {
+            // 클릭으로 간주
+            closeInfoCard();
+            if (selectedMarker) {
+              selectedMarker.classList.remove('selected');
+              selectedMarker = null;
+            }
+          }
+          isDragging = false;
+        });
+
+        // 마우스 휠로 줌
+        mapContainer.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          if (e.deltaY < 0) {
+            zoomIn();
+          } else {
+            zoomOut();
+          }
+        });
+      }
+
+      // 줌 초기화
+      currentPanX = 500;
+      currentPanY = 500;
+      updateZoomDisplay();
+    });
+
+    // 실시간 카운트다운 업데이트
+    function updateCountdowns() {
+      const now = new Date();
+      const rows = document.querySelectorAll('.commander-row');
+      let needsStatsUpdate = false;
+
+      rows.forEach(row => {
+        const datetime = row.dataset.datetime;
+        if (!datetime) return;
+
+        const expireTime = new Date(datetime);
+        const diff = expireTime - now;
+
+        if (diff <= 0) {
+          const countdownEl = row.querySelector('.countdown-display');
+          if (countdownEl && !countdownEl.classList.contains('text-gray-400')) {
+            countdownEl.textContent = '만료됨';
+            countdownEl.classList.remove('text-red-600', 'font-bold');
+            countdownEl.classList.add('text-gray-400');
+            row.dataset.status = 'expired';
+            row.dataset.minutes = '-1';
+            needsStatsUpdate = true;
+          }
+        } else {
+          const totalMinutes = Math.floor(diff / 1000 / 60);
+          const hours = Math.floor(totalMinutes / 60);
+          const minutes = totalMinutes % 60;
+          const seconds = Math.floor((diff / 1000) % 60);
+
+          // 이전 값과 비교
+          const oldMinutes = parseInt(row.dataset.minutes);
+          if (oldMinutes !== totalMinutes) {
+            // 30분 경계를 넘었는지 확인
+            if ((oldMinutes > 30 && totalMinutes <= 30) || (oldMinutes <= 30 && totalMinutes > 30)) {
+              needsStatsUpdate = true;
+            }
+            row.dataset.minutes = totalMinutes;
+          }
+
+          const countdownEl = row.querySelector('.countdown-display');
+          if (countdownEl) {
+            if (hours > 0) {
+              countdownEl.textContent = `${hours}시간 ${minutes}분`;
+            } else {
+              countdownEl.textContent = `${minutes}분 ${seconds}초`;
+            }
+          }
+        }
+      });
+
+      // 통계 업데이트가 필요한 경우에만 실행
+      if (needsStatsUpdate) {
+        updateStats();
+        // 지도형이 활성화되어 있으면 지도도 업데이트
+        if (currentView === 'map') {
+          renderMap();
+        }
+      }
+    }
+
+    // 1초마다 카운트다운 업데이트
+    setInterval(updateCountdowns, 1000);
+
+    // 초기 렌더링
+    updateCountdowns();
+    updateStats();
+  </script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
