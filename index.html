@@ -203,26 +203,26 @@
     <!-- Header -->
     <header class="text-center mb-8">
       <h1 class="text-4xl font-bold text-gray-800 mb-2">🐑 사냥</h1>
-      <p class="text-gray-600">기준 시각: <span id="baseTime">2025-11-06 13:33:06</span> (KST)</p>
+      <p class="text-gray-600">기준 시각: <span id="baseTime">2025-11-06 13:32:06</span> (KST)</p>
       <p class="text-gray-500 text-sm">실시간 카운트다운 업데이트 중</p>
     </header>
 
     <!-- Statistics Dashboard -->
     <div class="grid grid-cols-4 gap-4 mb-6 stats-grid">
       <div class="bg-white rounded-lg shadow-md p-4 text-center">
-        <div class="text-3xl font-bold text-blue-600">56</div>
+        <div class="text-3xl font-bold text-blue-600">66</div>
         <div class="text-sm text-gray-600 mt-1">전체</div>
       </div>
       <div class="bg-white rounded-lg shadow-md p-4 text-center">
-        <div class="text-3xl font-bold text-green-600" id="statActive">56</div>
+        <div class="text-3xl font-bold text-green-600" id="statActive">55</div>
         <div class="text-sm text-gray-600 mt-1">보호막 활성</div>
       </div>
       <div class="bg-white rounded-lg shadow-md p-4 text-center">
-        <div class="text-3xl font-bold text-gray-400" id="statExpired">0</div>
+        <div class="text-3xl font-bold text-gray-400" id="statExpired">11</div>
         <div class="text-sm text-gray-600 mt-1">만료됨</div>
       </div>
       <div class="bg-white rounded-lg shadow-md p-4 text-center">
-        <div class="text-3xl font-bold text-red-600" id="statCritical">3</div>
+        <div class="text-3xl font-bold text-red-600" id="statCritical">2</div>
         <div class="text-sm text-gray-600 mt-1">30분 이하</div>
       </div>
     </div>
@@ -276,731 +276,861 @@
             </tr>
           </thead>
           <tbody id="commanderTableBody">
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T13:36:00" data-status="active" data-minutes="3" data-name="anarchist sheep" data-x="237" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="dr h h holmes 홈즈" data-x="706" data-y="7">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">Dr H H Holmes 홈즈</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('706, 7')">(706, 7)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="anarchist sheep" data-x="237" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Anarchist Sheep</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 413')">(237, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
-      <div class="time-display text-gray-600">
-        <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 01:36</div>
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">3분 0초</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T13:43:00" data-status="active" data-minutes="10" data-name="baa 자이언트" data-x="229" data-y="401">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="미쟝ㅡamy" data-x="237" data-y="417">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">미쟝ㅡAmy</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 417')">(237, 417)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="nate the citadel" data-x="86" data-y="613">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">Nate the citadel</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('86, 613')">(86, 613)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="mukkis" data-x="529" data-y="911">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">Mukkis</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('529, 911')">(529, 911)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="달콤한책방sweet" data-x="855" data-y="39">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">달콤한책방Sweet</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('855, 39')">(855, 39)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="nebula flux" data-x="39" data-y="259">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">Nebula Flux</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('39, 259')">(39, 259)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="sysbryte" data-x="609" data-y="919">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">SysBryte</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('609, 919')">(609, 919)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="dirt boy" data-x="958" data-y="501">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">Dirt boy</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('958, 501')">(958, 501)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="brodi32" data-x="908" data-y="137">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">Brodi32</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('908, 137')">(908, 137)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="" data-status="expired" data-minutes="-1" data-name="moosienation" data-x="96" data-y="331">
+  <td class="px-6 py-4 text-sm text-gray-900 font-medium">Moosienation</td>
+  <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('96, 331')">(96, 331)</td>
+  <td class="px-6 py-4 text-sm">
+    <div class="flex items-center justify-between">
+      <div class="time-display text-gray-400">
+        <div class="text-xs text-gray-400">만료</div>
+        <div class="text-gray-400">-</div>
+      </div>
+      <span class="countdown-display text-xs font-mono ml-4 text-gray-400">지남</span>
+    </div>
+  </td>
+</tr>
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T13:41:00" data-status="active" data-minutes="9" data-name="baa 자이언트" data-x="229" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">BAA 자이언트</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('229, 401')">(229, 401)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 01:43</div>
+        <div>오후 01:41</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">10분 0초</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">9분 0초</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T13:45:00" data-status="active" data-minutes="12" data-name="general z0d" data-x="237" data-y="405">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T13:42:00" data-status="active" data-minutes="10" data-name="general z0d" data-x="237" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">General z0d</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 405')">(237, 405)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 01:45</div>
+        <div>오후 01:42</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">12분 0초</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">10분 0초</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T14:35:00" data-status="active" data-minutes="62" data-name="youm사장" data-x="237" data-y="421">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T14:27:00" data-status="active" data-minutes="55" data-name="youm사장" data-x="237" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Youm사장</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 421')">(237, 421)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 02:35</div>
+        <div>오후 02:27</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">1시간 2분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">55분 0초</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T14:38:00" data-status="active" data-minutes="65" data-name="dwarf 드워프" data-x="209" data-y="417">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T14:31:00" data-status="active" data-minutes="59" data-name="dwarf 드워프" data-x="209" data-y="417">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Dwarf 드워프</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 417')">(209, 417)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 02:38</div>
+        <div>오후 02:31</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">1시간 5분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">59분 0초</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T14:51:00" data-status="active" data-minutes="78" data-name="ezenekai" data-x="224" data-y="409">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T14:42:00" data-status="active" data-minutes="70" data-name="ezenekai" data-x="224" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Ezenekai</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('224, 409')">(224, 409)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 02:51</div>
+        <div>오후 02:42</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">1시간 18분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">1시간 10분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T15:12:00" data-status="active" data-minutes="99" data-name="60계오리" data-x="229" data-y="409">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T15:03:00" data-status="active" data-minutes="91" data-name="60계오리" data-x="229" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">60계오리</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('229, 409')">(229, 409)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 03:12</div>
+        <div>오후 03:03</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">1시간 39분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">1시간 31분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T15:40:00" data-status="active" data-minutes="127" data-name="pemason" data-x="209" data-y="401">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T15:30:00" data-status="active" data-minutes="118" data-name="pemason" data-x="209" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Pemason</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 401')">(209, 401)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 03:40</div>
+        <div>오후 03:30</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 7분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">1시간 58분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T15:41:00" data-status="active" data-minutes="128" data-name="mite음메" data-x="221" data-y="401">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T15:31:00" data-status="active" data-minutes="119" data-name="mite음메" data-x="221" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Mite음메</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('221, 401')">(221, 401)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 03:41</div>
+        <div>오후 03:31</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 8분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">1시간 59분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:19:00" data-status="active" data-minutes="166" data-name="배꼽 lilbutton" data-x="241" data-y="405">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:09:00" data-status="active" data-minutes="157" data-name="배꼽 lilbutton" data-x="241" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">배꼽 LilButton</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('241, 405')">(241, 405)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 04:19</div>
+        <div>오후 04:09</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 46분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 37분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:21:00" data-status="active" data-minutes="168" data-name="one baad nucca" data-x="218" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:11:00" data-status="active" data-minutes="159" data-name="one baad nucca" data-x="218" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">One BAAD Nucca</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('218, 413')">(218, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 04:21</div>
+        <div>오후 04:11</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 48분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 39분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:29:00" data-status="active" data-minutes="176" data-name="dirkd1ggler" data-x="205" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:19:00" data-status="active" data-minutes="167" data-name="dirkd1ggler" data-x="205" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">DirkD1ggler</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('205, 413')">(205, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 04:29</div>
+        <div>오후 04:19</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 56분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 47분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:30:00" data-status="active" data-minutes="177" data-name="bad azz mom" data-x="209" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:20:00" data-status="active" data-minutes="168" data-name="bad azz mom" data-x="209" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">BAD AZZ MOM</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 413')">(209, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 04:30</div>
+        <div>오후 04:20</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 57분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 48분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:33:00" data-status="active" data-minutes="180" data-name="ashley1586" data-x="872" data-y="921">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:24:00" data-status="active" data-minutes="172" data-name="ashley1586" data-x="872" data-y="921">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Ashley1586</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('872, 921')">(872, 921)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 04:33</div>
+        <div>오후 04:24</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">3시간 0분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 52분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:40:00" data-status="active" data-minutes="187" data-name="benty22" data-x="213" data-y="429">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:31:00" data-status="active" data-minutes="179" data-name="benty22" data-x="213" data-y="429">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Benty22</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 429')">(213, 429)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 04:40</div>
+        <div>오후 04:31</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">3시간 7분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">2시간 59분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:45:00" data-status="active" data-minutes="192" data-name="seababy" data-x="225" data-y="401">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:36:00" data-status="active" data-minutes="184" data-name="seababy" data-x="225" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Seababy</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('225, 401')">(225, 401)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 04:45</div>
+        <div>오후 04:36</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">3시간 12분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">3시간 4분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:58:00" data-status="active" data-minutes="205" data-name="cb mass" data-x="213" data-y="405">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T16:48:00" data-status="active" data-minutes="196" data-name="cb mass" data-x="213" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">CB mass</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 405')">(213, 405)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 04:58</div>
+        <div>오후 04:48</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">3시간 25분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">3시간 16분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T18:00:00" data-status="active" data-minutes="267" data-name="소멸하였다 ben" data-x="237" data-y="409">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T17:50:00" data-status="active" data-minutes="258" data-name="소멸하였다 ben" data-x="237" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">소멸하였다 Ben</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 409')">(237, 409)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 06:00</div>
+        <div>오후 05:50</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">4시간 27분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">4시간 18분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T18:51:00" data-status="active" data-minutes="318" data-name="belafiladelfo" data-x="221" data-y="437">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T18:42:00" data-status="active" data-minutes="310" data-name="belafiladelfo" data-x="221" data-y="437">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Belafiladelfo</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('221, 437')">(221, 437)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 06:51</div>
+        <div>오후 06:42</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 18분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 10분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T19:09:00" data-status="active" data-minutes="336" data-name="ʚ세레낭 serena" data-x="225" data-y="405">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T18:59:00" data-status="active" data-minutes="327" data-name="ʚ세레낭 serena" data-x="225" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">ʚ세레낭 serena</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('225, 405')">(225, 405)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 07:09</div>
+        <div>오후 06:59</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 36분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 27분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T19:11:00" data-status="active" data-minutes="338" data-name="팍준jun" data-x="205" data-y="421">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T19:02:00" data-status="active" data-minutes="330" data-name="팍준jun" data-x="205" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">팍준Jun</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('205, 421')">(205, 421)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 07:11</div>
+        <div>오후 07:02</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 38분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 30분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T19:18:00" data-status="active" data-minutes="345" data-name="여라하 laha" data-x="230" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T19:08:00" data-status="active" data-minutes="336" data-name="여라하 laha" data-x="230" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">여라하 Laha</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('230, 413')">(230, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 07:18</div>
+        <div>오후 07:08</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 45분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 36분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T19:21:00" data-status="active" data-minutes="348" data-name="영웅gen ss lee" data-x="213" data-y="417">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T19:11:00" data-status="active" data-minutes="339" data-name="영웅gen ss lee" data-x="213" data-y="417">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">영웅GEN SS LEE</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 417')">(213, 417)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 07:21</div>
+        <div>오후 07:11</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 48분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">5시간 39분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T20:17:00" data-status="active" data-minutes="404" data-name="ok13" data-x="237" data-y="425">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T20:07:00" data-status="active" data-minutes="395" data-name="ok13" data-x="237" data-y="425">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">OK13</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('237, 425')">(237, 425)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 08:17</div>
+        <div>오후 08:07</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">6시간 44분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">6시간 35분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T20:44:00" data-status="active" data-minutes="431" data-name="bubbagmpshrmp 버바" data-x="213" data-y="425">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T20:34:00" data-status="active" data-minutes="422" data-name="bubbagmpshrmp 버바" data-x="213" data-y="425">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">BubbaGmpShrmp 버바</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 425')">(213, 425)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 08:44</div>
+        <div>오후 08:34</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">7시간 11분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">7시간 2분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T20:56:00" data-status="active" data-minutes="443" data-name="nico062025" data-x="228" data-y="47">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T20:46:00" data-status="active" data-minutes="434" data-name="nico062025" data-x="228" data-y="47">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Nico062025</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('228, 47')">(228, 47)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 08:56</div>
+        <div>오후 08:46</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">7시간 23분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">7시간 14분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T22:24:00" data-status="active" data-minutes="531" data-name="람보르bor" data-x="221" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T22:14:00" data-status="active" data-minutes="522" data-name="람보르bor" data-x="221" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">람보르bor</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('221, 413')">(221, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 10:24</div>
+        <div>오후 10:14</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">8시간 51분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">8시간 42분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T22:57:00" data-status="active" data-minutes="564" data-name="꽃 거 지" data-x="213" data-y="421">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T22:48:00" data-status="active" data-minutes="556" data-name="꽃 거 지" data-x="213" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">꽃 거 지</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 421')">(213, 421)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 10:57</div>
+        <div>오후 10:48</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">9시간 24분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">9시간 16분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T23:00:00" data-status="active" data-minutes="567" data-name="남궁시향" data-x="213" data-y="433">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T22:50:00" data-status="active" data-minutes="558" data-name="남궁시향" data-x="213" data-y="433">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">남궁시향</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 433')">(213, 433)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 11:00</div>
+        <div>오후 10:50</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">9시간 27분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">9시간 18분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T23:13:00" data-status="active" data-minutes="580" data-name="덩그렁" data-x="205" data-y="417">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T23:03:00" data-status="active" data-minutes="571" data-name="덩그렁" data-x="205" data-y="417">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">덩그렁</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('205, 417')">(205, 417)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 11:13</div>
+        <div>오후 11:03</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">9시간 40분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">9시간 31분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T23:48:00" data-status="active" data-minutes="615" data-name="구아바망고mango" data-x="241" data-y="417">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-06T23:39:00" data-status="active" data-minutes="607" data-name="구아바망고mango" data-x="241" data-y="417">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">구아바망고Mango</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('241, 417')">(241, 417)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/06 (목)</div>
-        <div>오후 11:48</div>
+        <div>오후 11:39</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">10시간 15분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">10시간 7분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T01:02:00" data-status="active" data-minutes="689" data-name="belle gunness" data-x="229" data-y="437">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T00:52:00" data-status="active" data-minutes="680" data-name="belle gunness" data-x="229" data-y="437">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Belle Gunness</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('229, 437')">(229, 437)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 01:02</div>
+        <div>오전 12:52</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">11시간 29분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">11시간 20분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T01:47:00" data-status="active" data-minutes="734" data-name="farthobbler" data-x="234" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T01:37:00" data-status="active" data-minutes="725" data-name="farthobbler" data-x="234" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Farthobbler</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('234, 413')">(234, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 01:47</div>
+        <div>오전 01:37</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">12시간 14분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">12시간 5분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T01:56:00" data-status="active" data-minutes="743" data-name="ꕤ딩 dingꕤ" data-x="224" data-y="435">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T01:46:00" data-status="active" data-minutes="734" data-name="ꕤ딩 dingꕤ" data-x="224" data-y="435">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">ꕤ딩 Dingꕤ</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('224, 435')">(224, 435)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 01:56</div>
+        <div>오전 01:46</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">12시간 23분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">12시간 14분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T06:27:00" data-status="active" data-minutes="1014" data-name="boneyeric" data-x="307" data-y="581">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T06:17:00" data-status="active" data-minutes="1005" data-name="boneyeric" data-x="307" data-y="581">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">BoneyEric</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('307, 581')">(307, 581)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 06:27</div>
+        <div>오전 06:17</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">16시간 54분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">16시간 45분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T06:54:00" data-status="active" data-minutes="1041" data-name="jenna 제나" data-x="241" data-y="409">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T06:45:00" data-status="active" data-minutes="1033" data-name="jenna 제나" data-x="241" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Jenna 제나</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('241, 409')">(241, 409)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 06:54</div>
+        <div>오전 06:45</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">17시간 21분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">17시간 13분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T09:06:00" data-status="active" data-minutes="1173" data-name="snick 스닉" data-x="323" data-y="961">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T08:56:00" data-status="active" data-minutes="1164" data-name="snick 스닉" data-x="323" data-y="961">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Snick 스닉</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('323, 961')">(323, 961)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 09:06</div>
+        <div>오전 08:56</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">19시간 33분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">19시간 24분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T09:09:00" data-status="active" data-minutes="1176" data-name="general schwartzkoff" data-x="306" data-y="593">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T09:00:00" data-status="active" data-minutes="1168" data-name="general schwartzkoff" data-x="306" data-y="593">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">General Schwartzkoff</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('306, 593')">(306, 593)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 09:09</div>
+        <div>오전 09:00</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">19시간 36분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">19시간 28분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T09:30:00" data-status="active" data-minutes="1197" data-name="crazy mazy" data-x="221" data-y="409">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T09:20:00" data-status="active" data-minutes="1188" data-name="crazy mazy" data-x="221" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Crazy Mazy</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('221, 409')">(221, 409)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 09:30</div>
+        <div>오전 09:20</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">19시간 57분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">19시간 48분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T11:00:00" data-status="active" data-minutes="1287" data-name="raisehellpraisedale" data-x="241" data-y="425">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T10:50:00" data-status="active" data-minutes="1278" data-name="raisehellpraisedale" data-x="241" data-y="425">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">RaiseHellPraiseDale</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('241, 425')">(241, 425)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 11:00</div>
+        <div>오전 10:50</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 27분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 18분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T11:02:00" data-status="active" data-minutes="1289" data-name="rachelrene 라헬" data-x="224" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T10:52:00" data-status="active" data-minutes="1280" data-name="rachelrene 라헬" data-x="224" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">RachelRene 라헬</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('224, 413')">(224, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 11:02</div>
+        <div>오전 10:52</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 29분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 20분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T11:02:00" data-status="active" data-minutes="1289" data-name="missamericana13" data-x="227" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T10:52:00" data-status="active" data-minutes="1280" data-name="missamericana13" data-x="227" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">MissAmericana13</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('227, 413')">(227, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 11:02</div>
+        <div>오전 10:52</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 29분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 20분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T11:05:00" data-status="active" data-minutes="1292" data-name="mm1234567" data-x="241" data-y="421">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T10:55:00" data-status="active" data-minutes="1283" data-name="mm1234567" data-x="241" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">MM1234567</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('241, 421')">(241, 421)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 11:05</div>
+        <div>오전 10:55</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 32분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 23분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T11:31:00" data-status="active" data-minutes="1318" data-name="no to the dictator" data-x="241" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T11:21:00" data-status="active" data-minutes="1309" data-name="no to the dictator" data-x="241" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">No To The Dictator</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('241, 413')">(241, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 11:31</div>
+        <div>오전 11:21</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 58분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 49분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T11:37:00" data-status="active" data-minutes="1324" data-name="unwooly guru 구루" data-x="205" data-y="409">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T11:27:00" data-status="active" data-minutes="1315" data-name="unwooly guru 구루" data-x="205" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">unwooly guru 구루</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('205, 409')">(205, 409)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오전 11:37</div>
+        <div>오전 11:27</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">22시간 4분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">21시간 55분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T12:44:00" data-status="active" data-minutes="1391" data-name="senator lamb chop" data-x="217" data-y="405">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-07T12:34:00" data-status="active" data-minutes="1382" data-name="senator lamb chop" data-x="217" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Senator Lamb Chop</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('217, 405')">(217, 405)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/07 (금)</div>
-        <div>오후 12:44</div>
+        <div>오후 12:34</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">23시간 11분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">23시간 2분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T08:43:00" data-status="active" data-minutes="2590" data-name="i am fudd 퍼드" data-x="233" data-y="405">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T08:33:00" data-status="active" data-minutes="2581" data-name="i am fudd 퍼드" data-x="233" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">i am fudd 퍼드</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('233, 405')">(233, 405)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/08 (토)</div>
-        <div>오전 08:43</div>
+        <div>오전 08:33</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">43시간 10분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">43시간 1분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T09:01:00" data-status="active" data-minutes="2608" data-name="icetee58" data-x="233" data-y="409">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T08:52:00" data-status="active" data-minutes="2600" data-name="icetee58" data-x="233" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">IceTee58</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('233, 409')">(233, 409)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/08 (토)</div>
-        <div>오전 09:01</div>
+        <div>오전 08:52</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">43시간 28분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">43시간 20분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T11:03:00" data-status="active" data-minutes="2730" data-name="farside 절망" data-x="210" data-y="405">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T10:53:00" data-status="active" data-minutes="2721" data-name="farside 절망" data-x="210" data-y="405">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Farside 절망</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('210, 405')">(210, 405)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/08 (토)</div>
-        <div>오전 11:03</div>
+        <div>오전 10:53</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">45시간 30분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">45시간 21분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T12:23:00" data-status="active" data-minutes="2810" data-name="니뭔대" data-x="215" data-y="413">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T12:14:00" data-status="active" data-minutes="2802" data-name="니뭔대" data-x="215" data-y="413">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">니뭔대</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('215, 413')">(215, 413)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/08 (토)</div>
-        <div>오후 12:23</div>
+        <div>오후 12:14</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">46시간 50분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">46시간 42분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T16:02:00" data-status="active" data-minutes="3029" data-name="anna baa" data-x="217" data-y="409">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T15:53:00" data-status="active" data-minutes="3021" data-name="anna baa" data-x="217" data-y="409">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">ANNA BAA</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('217, 409')">(217, 409)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/08 (토)</div>
-        <div>오후 04:02</div>
+        <div>오후 03:53</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">50시간 29분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">50시간 21분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T17:59:00" data-status="active" data-minutes="3146" data-name="jerry noflocksgiven" data-x="205" data-y="425">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T17:49:00" data-status="active" data-minutes="3137" data-name="jerry noflocksgiven" data-x="205" data-y="425">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Jerry noflocksgiven</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('205, 425')">(205, 425)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/08 (토)</div>
-        <div>오후 05:59</div>
+        <div>오후 05:49</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">52시간 26분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">52시간 17분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T21:00:00" data-status="active" data-minutes="3327" data-name="나이수장" data-x="491" data-y="441">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T20:50:00" data-status="active" data-minutes="3318" data-name="나이수장" data-x="491" data-y="441">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">나이수장</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('491, 441')">(491, 441)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/08 (토)</div>
-        <div>오후 09:00</div>
+        <div>오후 08:50</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">55시간 27분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">55시간 18분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T21:18:00" data-status="active" data-minutes="3345" data-name="ninjajuni주니" data-x="209" data-y="425">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-08T21:09:00" data-status="active" data-minutes="3337" data-name="ninjajuni주니" data-x="209" data-y="425">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Ninjajuni주니</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 425')">(209, 425)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/08 (토)</div>
-        <div>오후 09:18</div>
+        <div>오후 09:09</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">55시간 45분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">55시간 37분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-09T08:54:00" data-status="active" data-minutes="4041" data-name="dafungi" data-x="213" data-y="401">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-09T08:44:00" data-status="active" data-minutes="4032" data-name="dafungi" data-x="213" data-y="401">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Dafungi</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('213, 401')">(213, 401)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/09 (일)</div>
-        <div>오전 08:54</div>
+        <div>오전 08:44</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">67시간 21분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">67시간 12분</span>
     </div>
   </td>
 </tr>
-<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-09T11:26:00" data-status="active" data-minutes="4193" data-name="angela안젤라" data-x="209" data-y="421">
+<tr class="hover:bg-gray-50 commander-row" data-datetime="2025-11-09T11:16:00" data-status="active" data-minutes="4184" data-name="angela안젤라" data-x="209" data-y="421">
   <td class="px-6 py-4 text-sm text-gray-900 font-medium">Angela안젤라</td>
   <td class="px-6 py-4 text-sm text-blue-600 cursor-pointer hover:text-blue-800 hover:underline" onclick="copyCoordinates('209, 421')">(209, 421)</td>
   <td class="px-6 py-4 text-sm">
     <div class="flex items-center justify-between">
       <div class="time-display text-gray-600">
         <div class="text-xs text-gray-500">11/09 (일)</div>
-        <div>오전 11:26</div>
+        <div>오전 11:16</div>
       </div>
-      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">69시간 53분</span>
+      <span class="countdown-display text-xs font-mono ml-4 text-red-600 font-bold">69시간 44분</span>
     </div>
   </td>
 </tr>
@@ -1079,8 +1209,8 @@
   </div>
 
   <script>
-    const BASE_TIME = new Date('2025-11-06T13:33:06');
-    const MAP_DATA = [{"name": "Anarchist Sheep", "x": 237, "y": 413, "is_expired": false, "total_minutes": 3, "countdown": "3\ubd84 0\ucd08", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 01:36"}, {"name": "BAA \uc790\uc774\uc5b8\ud2b8", "x": 229, "y": 401, "is_expired": false, "total_minutes": 10, "countdown": "10\ubd84 0\ucd08", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 01:43"}, {"name": "General z0d", "x": 237, "y": 405, "is_expired": false, "total_minutes": 12, "countdown": "12\ubd84 0\ucd08", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 01:45"}, {"name": "Youm\uc0ac\uc7a5", "x": 237, "y": 421, "is_expired": false, "total_minutes": 62, "countdown": "1\uc2dc\uac04 2\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 02:35"}, {"name": "Dwarf \ub4dc\uc6cc\ud504", "x": 209, "y": 417, "is_expired": false, "total_minutes": 65, "countdown": "1\uc2dc\uac04 5\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 02:38"}, {"name": "Ezenekai", "x": 224, "y": 409, "is_expired": false, "total_minutes": 78, "countdown": "1\uc2dc\uac04 18\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 02:51"}, {"name": "60\uacc4\uc624\ub9ac", "x": 229, "y": 409, "is_expired": false, "total_minutes": 99, "countdown": "1\uc2dc\uac04 39\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 03:12"}, {"name": "Pemason", "x": 209, "y": 401, "is_expired": false, "total_minutes": 127, "countdown": "2\uc2dc\uac04 7\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 03:40"}, {"name": "Mite\uc74c\uba54", "x": 221, "y": 401, "is_expired": false, "total_minutes": 128, "countdown": "2\uc2dc\uac04 8\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 03:41"}, {"name": "\ubc30\uaf3d LilButton", "x": 241, "y": 405, "is_expired": false, "total_minutes": 166, "countdown": "2\uc2dc\uac04 46\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:19"}, {"name": "One BAAD Nucca", "x": 218, "y": 413, "is_expired": false, "total_minutes": 168, "countdown": "2\uc2dc\uac04 48\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:21"}, {"name": "DirkD1ggler", "x": 205, "y": 413, "is_expired": false, "total_minutes": 176, "countdown": "2\uc2dc\uac04 56\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:29"}, {"name": "BAD AZZ MOM", "x": 209, "y": 413, "is_expired": false, "total_minutes": 177, "countdown": "2\uc2dc\uac04 57\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:30"}, {"name": "Ashley1586", "x": 872, "y": 921, "is_expired": false, "total_minutes": 180, "countdown": "3\uc2dc\uac04 0\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:33"}, {"name": "Benty22", "x": 213, "y": 429, "is_expired": false, "total_minutes": 187, "countdown": "3\uc2dc\uac04 7\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:40"}, {"name": "Seababy", "x": 225, "y": 401, "is_expired": false, "total_minutes": 192, "countdown": "3\uc2dc\uac04 12\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:45"}, {"name": "CB mass", "x": 213, "y": 405, "is_expired": false, "total_minutes": 205, "countdown": "3\uc2dc\uac04 25\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:58"}, {"name": "\uc18c\uba78\ud558\uc600\ub2e4 Ben", "x": 237, "y": 409, "is_expired": false, "total_minutes": 267, "countdown": "4\uc2dc\uac04 27\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 06:00"}, {"name": "Belafiladelfo", "x": 221, "y": 437, "is_expired": false, "total_minutes": 318, "countdown": "5\uc2dc\uac04 18\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 06:51"}, {"name": "\u029a\uc138\ub808\ub0ad serena", "x": 225, "y": 405, "is_expired": false, "total_minutes": 336, "countdown": "5\uc2dc\uac04 36\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 07:09"}, {"name": "\ud30d\uc900Jun", "x": 205, "y": 421, "is_expired": false, "total_minutes": 338, "countdown": "5\uc2dc\uac04 38\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 07:11"}, {"name": "\uc5ec\ub77c\ud558 Laha", "x": 230, "y": 413, "is_expired": false, "total_minutes": 345, "countdown": "5\uc2dc\uac04 45\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 07:18"}, {"name": "\uc601\uc6c5GEN SS LEE", "x": 213, "y": 417, "is_expired": false, "total_minutes": 348, "countdown": "5\uc2dc\uac04 48\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 07:21"}, {"name": "OK13", "x": 237, "y": 425, "is_expired": false, "total_minutes": 404, "countdown": "6\uc2dc\uac04 44\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 08:17"}, {"name": "BubbaGmpShrmp \ubc84\ubc14", "x": 213, "y": 425, "is_expired": false, "total_minutes": 431, "countdown": "7\uc2dc\uac04 11\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 08:44"}, {"name": "Nico062025", "x": 228, "y": 47, "is_expired": false, "total_minutes": 443, "countdown": "7\uc2dc\uac04 23\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 08:56"}, {"name": "\ub78c\ubcf4\ub974bor", "x": 221, "y": 413, "is_expired": false, "total_minutes": 531, "countdown": "8\uc2dc\uac04 51\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 10:24"}, {"name": "\uaf43 \uac70 \uc9c0", "x": 213, "y": 421, "is_expired": false, "total_minutes": 564, "countdown": "9\uc2dc\uac04 24\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 10:57"}, {"name": "\ub0a8\uad81\uc2dc\ud5a5", "x": 213, "y": 433, "is_expired": false, "total_minutes": 567, "countdown": "9\uc2dc\uac04 27\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 11:00"}, {"name": "\ub369\uadf8\ub801", "x": 205, "y": 417, "is_expired": false, "total_minutes": 580, "countdown": "9\uc2dc\uac04 40\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 11:13"}, {"name": "\uad6c\uc544\ubc14\ub9dd\uace0Mango", "x": 241, "y": 417, "is_expired": false, "total_minutes": 615, "countdown": "10\uc2dc\uac04 15\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 11:48"}, {"name": "Belle Gunness", "x": 229, "y": 437, "is_expired": false, "total_minutes": 689, "countdown": "11\uc2dc\uac04 29\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 01:02"}, {"name": "Farthobbler", "x": 234, "y": 413, "is_expired": false, "total_minutes": 734, "countdown": "12\uc2dc\uac04 14\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 01:47"}, {"name": "\ua564\ub529 Ding\ua564", "x": 224, "y": 435, "is_expired": false, "total_minutes": 743, "countdown": "12\uc2dc\uac04 23\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 01:56"}, {"name": "BoneyEric", "x": 307, "y": 581, "is_expired": false, "total_minutes": 1014, "countdown": "16\uc2dc\uac04 54\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 06:27"}, {"name": "Jenna \uc81c\ub098", "x": 241, "y": 409, "is_expired": false, "total_minutes": 1041, "countdown": "17\uc2dc\uac04 21\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 06:54"}, {"name": "Snick \uc2a4\ub2c9", "x": 323, "y": 961, "is_expired": false, "total_minutes": 1173, "countdown": "19\uc2dc\uac04 33\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 09:06"}, {"name": "General Schwartzkoff", "x": 306, "y": 593, "is_expired": false, "total_minutes": 1176, "countdown": "19\uc2dc\uac04 36\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 09:09"}, {"name": "Crazy Mazy", "x": 221, "y": 409, "is_expired": false, "total_minutes": 1197, "countdown": "19\uc2dc\uac04 57\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 09:30"}, {"name": "RaiseHellPraiseDale", "x": 241, "y": 425, "is_expired": false, "total_minutes": 1287, "countdown": "21\uc2dc\uac04 27\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 11:00"}, {"name": "RachelRene \ub77c\ud5ec", "x": 224, "y": 413, "is_expired": false, "total_minutes": 1289, "countdown": "21\uc2dc\uac04 29\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 11:02"}, {"name": "MissAmericana13", "x": 227, "y": 413, "is_expired": false, "total_minutes": 1289, "countdown": "21\uc2dc\uac04 29\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 11:02"}, {"name": "MM1234567", "x": 241, "y": 421, "is_expired": false, "total_minutes": 1292, "countdown": "21\uc2dc\uac04 32\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 11:05"}, {"name": "No To The Dictator", "x": 241, "y": 413, "is_expired": false, "total_minutes": 1318, "countdown": "21\uc2dc\uac04 58\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 11:31"}, {"name": "unwooly guru \uad6c\ub8e8", "x": 205, "y": 409, "is_expired": false, "total_minutes": 1324, "countdown": "22\uc2dc\uac04 4\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 11:37"}, {"name": "Senator Lamb Chop", "x": 217, "y": 405, "is_expired": false, "total_minutes": 1391, "countdown": "23\uc2dc\uac04 11\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\ud6c4 12:44"}, {"name": "i am fudd \ud37c\ub4dc", "x": 233, "y": 405, "is_expired": false, "total_minutes": 2590, "countdown": "43\uc2dc\uac04 10\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\uc804 08:43"}, {"name": "IceTee58", "x": 233, "y": 409, "is_expired": false, "total_minutes": 2608, "countdown": "43\uc2dc\uac04 28\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\uc804 09:01"}, {"name": "Farside \uc808\ub9dd", "x": 210, "y": 405, "is_expired": false, "total_minutes": 2730, "countdown": "45\uc2dc\uac04 30\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\uc804 11:03"}, {"name": "\ub2c8\ubb54\ub300", "x": 215, "y": 413, "is_expired": false, "total_minutes": 2810, "countdown": "46\uc2dc\uac04 50\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 12:23"}, {"name": "ANNA BAA", "x": 217, "y": 409, "is_expired": false, "total_minutes": 3029, "countdown": "50\uc2dc\uac04 29\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 04:02"}, {"name": "Jerry noflocksgiven", "x": 205, "y": 425, "is_expired": false, "total_minutes": 3146, "countdown": "52\uc2dc\uac04 26\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 05:59"}, {"name": "\ub098\uc774\uc218\uc7a5", "x": 491, "y": 441, "is_expired": false, "total_minutes": 3327, "countdown": "55\uc2dc\uac04 27\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 09:00"}, {"name": "Ninjajuni\uc8fc\ub2c8", "x": 209, "y": 425, "is_expired": false, "total_minutes": 3345, "countdown": "55\uc2dc\uac04 45\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 09:18"}, {"name": "Dafungi", "x": 213, "y": 401, "is_expired": false, "total_minutes": 4041, "countdown": "67\uc2dc\uac04 21\ubd84", "date_disp": "11/09 (\uc77c)", "time_disp": "\uc624\uc804 08:54"}, {"name": "Angela\uc548\uc824\ub77c", "x": 209, "y": 421, "is_expired": false, "total_minutes": 4193, "countdown": "69\uc2dc\uac04 53\ubd84", "date_disp": "11/09 (\uc77c)", "time_disp": "\uc624\uc804 11:26"}];
+    const BASE_TIME = new Date('2025-11-06T13:32:06');
+    const MAP_DATA = [{"name": "Dr H H Holmes \ud648\uc988", "x": 706, "y": 7, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Anarchist Sheep", "x": 237, "y": 413, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "\ubbf8\uc7dd\u3161Amy", "x": 237, "y": 417, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Nate the citadel", "x": 86, "y": 613, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Mukkis", "x": 529, "y": 911, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "\ub2ec\ucf64\ud55c\ucc45\ubc29Sweet", "x": 855, "y": 39, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Nebula Flux", "x": 39, "y": 259, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "SysBryte", "x": 609, "y": 919, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Dirt boy", "x": 958, "y": 501, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Brodi32", "x": 908, "y": 137, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "Moosienation", "x": 96, "y": 331, "is_expired": true, "total_minutes": -1, "countdown": "\uc9c0\ub0a8", "date_disp": "-", "time_disp": "-"}, {"name": "BAA \uc790\uc774\uc5b8\ud2b8", "x": 229, "y": 401, "is_expired": false, "total_minutes": 9, "countdown": "9\ubd84 0\ucd08", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 01:41"}, {"name": "General z0d", "x": 237, "y": 405, "is_expired": false, "total_minutes": 10, "countdown": "10\ubd84 0\ucd08", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 01:42"}, {"name": "Youm\uc0ac\uc7a5", "x": 237, "y": 421, "is_expired": false, "total_minutes": 55, "countdown": "55\ubd84 0\ucd08", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 02:27"}, {"name": "Dwarf \ub4dc\uc6cc\ud504", "x": 209, "y": 417, "is_expired": false, "total_minutes": 59, "countdown": "59\ubd84 0\ucd08", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 02:31"}, {"name": "Ezenekai", "x": 224, "y": 409, "is_expired": false, "total_minutes": 70, "countdown": "1\uc2dc\uac04 10\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 02:42"}, {"name": "60\uacc4\uc624\ub9ac", "x": 229, "y": 409, "is_expired": false, "total_minutes": 91, "countdown": "1\uc2dc\uac04 31\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 03:03"}, {"name": "Pemason", "x": 209, "y": 401, "is_expired": false, "total_minutes": 118, "countdown": "1\uc2dc\uac04 58\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 03:30"}, {"name": "Mite\uc74c\uba54", "x": 221, "y": 401, "is_expired": false, "total_minutes": 119, "countdown": "1\uc2dc\uac04 59\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 03:31"}, {"name": "\ubc30\uaf3d LilButton", "x": 241, "y": 405, "is_expired": false, "total_minutes": 157, "countdown": "2\uc2dc\uac04 37\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:09"}, {"name": "One BAAD Nucca", "x": 218, "y": 413, "is_expired": false, "total_minutes": 159, "countdown": "2\uc2dc\uac04 39\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:11"}, {"name": "DirkD1ggler", "x": 205, "y": 413, "is_expired": false, "total_minutes": 167, "countdown": "2\uc2dc\uac04 47\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:19"}, {"name": "BAD AZZ MOM", "x": 209, "y": 413, "is_expired": false, "total_minutes": 168, "countdown": "2\uc2dc\uac04 48\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:20"}, {"name": "Ashley1586", "x": 872, "y": 921, "is_expired": false, "total_minutes": 172, "countdown": "2\uc2dc\uac04 52\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:24"}, {"name": "Benty22", "x": 213, "y": 429, "is_expired": false, "total_minutes": 179, "countdown": "2\uc2dc\uac04 59\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:31"}, {"name": "Seababy", "x": 225, "y": 401, "is_expired": false, "total_minutes": 184, "countdown": "3\uc2dc\uac04 4\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:36"}, {"name": "CB mass", "x": 213, "y": 405, "is_expired": false, "total_minutes": 196, "countdown": "3\uc2dc\uac04 16\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 04:48"}, {"name": "\uc18c\uba78\ud558\uc600\ub2e4 Ben", "x": 237, "y": 409, "is_expired": false, "total_minutes": 258, "countdown": "4\uc2dc\uac04 18\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 05:50"}, {"name": "Belafiladelfo", "x": 221, "y": 437, "is_expired": false, "total_minutes": 310, "countdown": "5\uc2dc\uac04 10\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 06:42"}, {"name": "\u029a\uc138\ub808\ub0ad serena", "x": 225, "y": 405, "is_expired": false, "total_minutes": 327, "countdown": "5\uc2dc\uac04 27\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 06:59"}, {"name": "\ud30d\uc900Jun", "x": 205, "y": 421, "is_expired": false, "total_minutes": 330, "countdown": "5\uc2dc\uac04 30\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 07:02"}, {"name": "\uc5ec\ub77c\ud558 Laha", "x": 230, "y": 413, "is_expired": false, "total_minutes": 336, "countdown": "5\uc2dc\uac04 36\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 07:08"}, {"name": "\uc601\uc6c5GEN SS LEE", "x": 213, "y": 417, "is_expired": false, "total_minutes": 339, "countdown": "5\uc2dc\uac04 39\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 07:11"}, {"name": "OK13", "x": 237, "y": 425, "is_expired": false, "total_minutes": 395, "countdown": "6\uc2dc\uac04 35\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 08:07"}, {"name": "BubbaGmpShrmp \ubc84\ubc14", "x": 213, "y": 425, "is_expired": false, "total_minutes": 422, "countdown": "7\uc2dc\uac04 2\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 08:34"}, {"name": "Nico062025", "x": 228, "y": 47, "is_expired": false, "total_minutes": 434, "countdown": "7\uc2dc\uac04 14\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 08:46"}, {"name": "\ub78c\ubcf4\ub974bor", "x": 221, "y": 413, "is_expired": false, "total_minutes": 522, "countdown": "8\uc2dc\uac04 42\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 10:14"}, {"name": "\uaf43 \uac70 \uc9c0", "x": 213, "y": 421, "is_expired": false, "total_minutes": 556, "countdown": "9\uc2dc\uac04 16\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 10:48"}, {"name": "\ub0a8\uad81\uc2dc\ud5a5", "x": 213, "y": 433, "is_expired": false, "total_minutes": 558, "countdown": "9\uc2dc\uac04 18\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 10:50"}, {"name": "\ub369\uadf8\ub801", "x": 205, "y": 417, "is_expired": false, "total_minutes": 571, "countdown": "9\uc2dc\uac04 31\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 11:03"}, {"name": "\uad6c\uc544\ubc14\ub9dd\uace0Mango", "x": 241, "y": 417, "is_expired": false, "total_minutes": 607, "countdown": "10\uc2dc\uac04 7\ubd84", "date_disp": "11/06 (\ubaa9)", "time_disp": "\uc624\ud6c4 11:39"}, {"name": "Belle Gunness", "x": 229, "y": 437, "is_expired": false, "total_minutes": 680, "countdown": "11\uc2dc\uac04 20\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 12:52"}, {"name": "Farthobbler", "x": 234, "y": 413, "is_expired": false, "total_minutes": 725, "countdown": "12\uc2dc\uac04 5\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 01:37"}, {"name": "\ua564\ub529 Ding\ua564", "x": 224, "y": 435, "is_expired": false, "total_minutes": 734, "countdown": "12\uc2dc\uac04 14\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 01:46"}, {"name": "BoneyEric", "x": 307, "y": 581, "is_expired": false, "total_minutes": 1005, "countdown": "16\uc2dc\uac04 45\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 06:17"}, {"name": "Jenna \uc81c\ub098", "x": 241, "y": 409, "is_expired": false, "total_minutes": 1033, "countdown": "17\uc2dc\uac04 13\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 06:45"}, {"name": "Snick \uc2a4\ub2c9", "x": 323, "y": 961, "is_expired": false, "total_minutes": 1164, "countdown": "19\uc2dc\uac04 24\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 08:56"}, {"name": "General Schwartzkoff", "x": 306, "y": 593, "is_expired": false, "total_minutes": 1168, "countdown": "19\uc2dc\uac04 28\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 09:00"}, {"name": "Crazy Mazy", "x": 221, "y": 409, "is_expired": false, "total_minutes": 1188, "countdown": "19\uc2dc\uac04 48\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 09:20"}, {"name": "RaiseHellPraiseDale", "x": 241, "y": 425, "is_expired": false, "total_minutes": 1278, "countdown": "21\uc2dc\uac04 18\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 10:50"}, {"name": "RachelRene \ub77c\ud5ec", "x": 224, "y": 413, "is_expired": false, "total_minutes": 1280, "countdown": "21\uc2dc\uac04 20\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 10:52"}, {"name": "MissAmericana13", "x": 227, "y": 413, "is_expired": false, "total_minutes": 1280, "countdown": "21\uc2dc\uac04 20\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 10:52"}, {"name": "MM1234567", "x": 241, "y": 421, "is_expired": false, "total_minutes": 1283, "countdown": "21\uc2dc\uac04 23\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 10:55"}, {"name": "No To The Dictator", "x": 241, "y": 413, "is_expired": false, "total_minutes": 1309, "countdown": "21\uc2dc\uac04 49\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 11:21"}, {"name": "unwooly guru \uad6c\ub8e8", "x": 205, "y": 409, "is_expired": false, "total_minutes": 1315, "countdown": "21\uc2dc\uac04 55\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\uc804 11:27"}, {"name": "Senator Lamb Chop", "x": 217, "y": 405, "is_expired": false, "total_minutes": 1382, "countdown": "23\uc2dc\uac04 2\ubd84", "date_disp": "11/07 (\uae08)", "time_disp": "\uc624\ud6c4 12:34"}, {"name": "i am fudd \ud37c\ub4dc", "x": 233, "y": 405, "is_expired": false, "total_minutes": 2581, "countdown": "43\uc2dc\uac04 1\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\uc804 08:33"}, {"name": "IceTee58", "x": 233, "y": 409, "is_expired": false, "total_minutes": 2600, "countdown": "43\uc2dc\uac04 20\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\uc804 08:52"}, {"name": "Farside \uc808\ub9dd", "x": 210, "y": 405, "is_expired": false, "total_minutes": 2721, "countdown": "45\uc2dc\uac04 21\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\uc804 10:53"}, {"name": "\ub2c8\ubb54\ub300", "x": 215, "y": 413, "is_expired": false, "total_minutes": 2802, "countdown": "46\uc2dc\uac04 42\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 12:14"}, {"name": "ANNA BAA", "x": 217, "y": 409, "is_expired": false, "total_minutes": 3021, "countdown": "50\uc2dc\uac04 21\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 03:53"}, {"name": "Jerry noflocksgiven", "x": 205, "y": 425, "is_expired": false, "total_minutes": 3137, "countdown": "52\uc2dc\uac04 17\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 05:49"}, {"name": "\ub098\uc774\uc218\uc7a5", "x": 491, "y": 441, "is_expired": false, "total_minutes": 3318, "countdown": "55\uc2dc\uac04 18\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 08:50"}, {"name": "Ninjajuni\uc8fc\ub2c8", "x": 209, "y": 425, "is_expired": false, "total_minutes": 3337, "countdown": "55\uc2dc\uac04 37\ubd84", "date_disp": "11/08 (\ud1a0)", "time_disp": "\uc624\ud6c4 09:09"}, {"name": "Dafungi", "x": 213, "y": 401, "is_expired": false, "total_minutes": 4032, "countdown": "67\uc2dc\uac04 12\ubd84", "date_disp": "11/09 (\uc77c)", "time_disp": "\uc624\uc804 08:44"}, {"name": "Angela\uc548\uc824\ub77c", "x": 209, "y": 421, "is_expired": false, "total_minutes": 4184, "countdown": "69\uc2dc\uac04 44\ubd84", "date_disp": "11/09 (\uc77c)", "time_disp": "\uc624\uc804 11:16"}];
     let currentFilter = 'all';
     let currentView = 'list';
 
